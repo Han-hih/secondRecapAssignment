@@ -31,14 +31,22 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
     let buttonView = {
         let view = UIView()
         view.backgroundColor = .white
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor.clear.cgColor
         view.layer.cornerRadius = view.frame.width / 2
         view.layer.masksToBounds = true
         return view
     }()
     
+    let heartButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "heart"), for: .normal)
+        button.tintColor = .black
+        return button
+    }()
     
     override func configure() {
-        [shoppingImageView, buttonView].forEach {
+        [shoppingImageView, buttonView, heartButton].forEach {
             contentView.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -58,7 +66,10 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
             buttonView.trailingAnchor.constraint(equalTo: shoppingImageView.trailingAnchor, constant: -10),
             buttonView.bottomAnchor.constraint(equalTo: shoppingImageView.bottomAnchor, constant: -10),
             buttonView.heightAnchor.constraint(equalTo: shoppingImageView.heightAnchor, multiplier: 0.2),
-            buttonView.widthAnchor.constraint(equalTo: buttonView.heightAnchor)
+            buttonView.widthAnchor.constraint(equalTo: buttonView.heightAnchor),
+            //하트버튼
+            heartButton.centerXAnchor.constraint(equalTo: buttonView.centerXAnchor),
+            heartButton.centerYAnchor.constraint(equalTo: buttonView.centerYAnchor)
         
         ])
     }
