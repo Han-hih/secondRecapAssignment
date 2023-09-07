@@ -28,10 +28,17 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
         
     }()
     
+    let buttonView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.cornerRadius = view.frame.width / 2
+        view.layer.masksToBounds = true
+        return view
+    }()
     
     
     override func configure() {
-        [shoppingImageView].forEach {
+        [shoppingImageView, buttonView].forEach {
             contentView.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -42,10 +49,16 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
         contentView.backgroundColor = .cyan
         
         NSLayoutConstraint.activate([
+            //쇼핑 이미지
             shoppingImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             shoppingImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             shoppingImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            shoppingImageView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.7)
+            shoppingImageView.heightAnchor.constraint(equalTo: contentView.widthAnchor),
+            //하트버튼이 들어갈 뷰
+            buttonView.trailingAnchor.constraint(equalTo: shoppingImageView.trailingAnchor, constant: -10),
+            buttonView.bottomAnchor.constraint(equalTo: shoppingImageView.bottomAnchor, constant: -10),
+            buttonView.heightAnchor.constraint(equalTo: shoppingImageView.heightAnchor, multiplier: 0.2),
+            buttonView.widthAnchor.constraint(equalTo: buttonView.heightAnchor)
         
         ])
     }

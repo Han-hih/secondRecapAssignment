@@ -53,10 +53,11 @@ class ViewController: UIViewController {
     }()
     
     private lazy var collectionView:  UICollectionView = {
-        let width = UIScreen.main.bounds.width / 2
+        let spacing: CGFloat = 10
+        let width = (UIScreen.main.bounds.size.width - (spacing * 3)) / 2
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.itemSize = CGSize(width: width - 20, height: width * 1.3)
+        layout.itemSize = CGSize(width: width, height: width * 1.5)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .white
