@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  LikeViewController.swift
 //  secondRecapAssignment
 //
 //  Created by 황인호 on 2023/09/07.
@@ -7,23 +7,21 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-    
+class LikeViewController: UIViewController {
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         
         setNavigationBar()
-        
     }
-
+    
 
     func setNavigationBar() {
-        self.navigationItem.title = "쇼핑 검색"
+        self.navigationItem.title = "좋아요 목록"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
     }
     
     
-    
-}
 
+}
