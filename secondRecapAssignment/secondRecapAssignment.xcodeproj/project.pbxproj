@@ -16,6 +16,7 @@
 		8066DC8D2AA9E4DD003EB4B6 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 8066DC8C2AA9E4DD003EB4B6 /* .gitignore */; };
 		8066DC8F2AA9E55B003EB4B6 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8066DC8E2AA9E55B003EB4B6 /* APIKey.swift */; };
 		8066DC942AA9F0C7003EB4B6 /* LikeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8066DC932AA9F0C7003EB4B6 /* LikeViewController.swift */; };
+		8066DC962AAA1FE6003EB4B6 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8066DC952AAA1FE6003EB4B6 /* CustomButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		8066DC8C2AA9E4DD003EB4B6 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		8066DC8E2AA9E55B003EB4B6 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		8066DC932AA9F0C7003EB4B6 /* LikeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeViewController.swift; sourceTree = "<group>"; };
+		8066DC952AAA1FE6003EB4B6 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 				8066DC772AA9DFB9003EB4B6 /* SceneDelegate.swift */,
 				8066DC932AA9F0C7003EB4B6 /* LikeViewController.swift */,
 				8066DC792AA9DFB9003EB4B6 /* ViewController.swift */,
+				8066DC952AAA1FE6003EB4B6 /* CustomButton.swift */,
 				8066DC7B2AA9DFB9003EB4B6 /* Main.storyboard */,
 				8066DC7E2AA9DFBA003EB4B6 /* Assets.xcassets */,
 				8066DC802AA9DFBA003EB4B6 /* LaunchScreen.storyboard */,
@@ -150,6 +153,7 @@
 			files = (
 				8066DC7A2AA9DFB9003EB4B6 /* ViewController.swift in Sources */,
 				8066DC762AA9DFB9003EB4B6 /* AppDelegate.swift in Sources */,
+				8066DC962AAA1FE6003EB4B6 /* CustomButton.swift in Sources */,
 				8066DC8F2AA9E55B003EB4B6 /* APIKey.swift in Sources */,
 				8066DC782AA9DFB9003EB4B6 /* SceneDelegate.swift in Sources */,
 				8066DC942AA9F0C7003EB4B6 /* LikeViewController.swift in Sources */,

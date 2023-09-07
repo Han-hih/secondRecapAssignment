@@ -18,13 +18,48 @@ class ViewController: UIViewController {
         return view
     }()
     
+    let buttonView = {
+        let view = UIView()
+        
+        return view
+    }()
+    
+    let accuracyButton = {
+        let button = CustomButton()
+        button.setTitle("정확도", for: .normal)
+        
+        return button
+    }()
+    
+    let dateButton = {
+        let button = CustomButton()
+        button.setTitle("날짜순", for: .normal)
+        
+        return button
+    }()
+    
+    let highPriceButton = {
+        let button = CustomButton()
+        button.setTitle("가격높은순", for: .normal)
+        
+        return button
+    }()
+    
+    let lowPriceButton = {
+        let button = CustomButton()
+        button.setTitle("가격낮은순", for: .normal)
+        
+        return button
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         searchBar.delegate = self
-        view.addSubview(searchBar)
-        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        [searchBar, buttonView, accuracyButton, dateButton, highPriceButton, lowPriceButton].forEach {
+            view.addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
 
         setNavigationBar()
         
@@ -40,10 +75,33 @@ class ViewController: UIViewController {
     
     func setConstraints() {
         NSLayoutConstraint.activate([
+            //searchBar
             searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            searchBar.heightAnchor.constraint(equalToConstant: 50)
+            searchBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            searchBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            searchBar.heightAnchor.constraint(equalToConstant: 40), //40이 최적화된 높이인 것 같다.
+            //버튼이 들어가기 위한 뷰
+            buttonView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
+            buttonView.leadingAnchor.constraint(equalTo: searchBar.leadingAnchor),
+            buttonView.trailingAnchor.constraint(equalTo: searchBar.trailingAnchor),
+            buttonView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
+            //정확도 버튼
+            accuracyButton.centerYAnchor.constraint(equalTo: buttonView.centerYAnchor),
+            accuracyButton.heightAnchor.constraint(equalTo: buttonView.heightAnchor, multiplier: 0.8),
+            accuracyButton.leadingAnchor.constraint(equalTo: searchBar.leadingAnchor, constant: 8),
+            //날짜순 버튼
+            dateButton.centerYAnchor.constraint(equalTo: buttonView.centerYAnchor),
+            dateButton.heightAnchor.constraint(equalTo: accuracyButton.heightAnchor),
+            dateButton.leadingAnchor.constraint(equalTo: accuracyButton.trailingAnchor, constant: 8),
+            //가격높은순 버튼
+            highPriceButton.centerYAnchor.constraint(equalTo: buttonView.centerYAnchor),
+            highPriceButton.heightAnchor.constraint(equalTo: accuracyButton.heightAnchor),
+            highPriceButton.leadingAnchor.constraint(equalTo: dateButton.trailingAnchor, constant: 8),
+            //가격낮은순 버튼
+            lowPriceButton.centerYAnchor.constraint(equalTo: buttonView.centerYAnchor),
+            lowPriceButton.heightAnchor.constraint(equalTo: accuracyButton.heightAnchor),
+            lowPriceButton.leadingAnchor.constraint(equalTo: highPriceButton.trailingAnchor, constant: 8),
+            
         ])
         
     }
