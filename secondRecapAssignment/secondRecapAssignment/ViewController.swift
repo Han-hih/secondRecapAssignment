@@ -8,12 +8,22 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        view.backgroundColor = .black
+        
+        setNavigationBar()
+        
     }
 
 
+    func setNavigationBar() {
+        title = "쇼핑 검색"
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+    }
+    
+    
+    
 }
 
