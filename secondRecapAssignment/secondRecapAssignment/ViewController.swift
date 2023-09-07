@@ -52,22 +52,38 @@ class ViewController: UIViewController {
         return button
     }()
     
+    private lazy var collectionView:  UICollectionView = {
+        let width = UIScreen.main.bounds.width / 2
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.itemSize = CGSize(width: width - 20, height: width * 1.3)
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .white
+        collectionView.register(ShopingListViewControllerCell.self, forCellWithReuseIdentifier: ShopingListViewControllerCell.identifier)
+        collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 10)
+        
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        
+        return collectionView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         searchBar.delegate = self
-        [searchBar, buttonView, accuracyButton, dateButton, highPriceButton, lowPriceButton].forEach {
+        [searchBar, buttonView, accuracyButton, dateButton, highPriceButton, lowPriceButton, collectionView].forEach {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
-
+        
         setNavigationBar()
         
         setConstraints()
     }
     
- 
-
+    
     func setNavigationBar() {
         self.navigationItem.title = "쇼핑 검색"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
@@ -81,7 +97,7 @@ class ViewController: UIViewController {
             searchBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             searchBar.heightAnchor.constraint(equalToConstant: 40), //40이 최적화된 높이인 것 같다.
             //버튼이 들어가기 위한 뷰
-            buttonView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
+            buttonView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 10),
             buttonView.leadingAnchor.constraint(equalTo: searchBar.leadingAnchor),
             buttonView.trailingAnchor.constraint(equalTo: searchBar.trailingAnchor),
             buttonView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
@@ -101,12 +117,32 @@ class ViewController: UIViewController {
             lowPriceButton.centerYAnchor.constraint(equalTo: buttonView.centerYAnchor),
             lowPriceButton.heightAnchor.constraint(equalTo: accuracyButton.heightAnchor),
             lowPriceButton.leadingAnchor.constraint(equalTo: highPriceButton.trailingAnchor, constant: 8),
-            
+            // 컬렉션뷰
+            collectionView.topAnchor.constraint(equalTo: buttonView.bottomAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
         
     }
     
 }
 extension ViewController: UISearchBarDelegate {
+    
+}
+extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShopingListViewControllerCell.identifier, for: indexPath) as? ShopingListViewControllerCell else { return UICollectionViewCell() }
+        
+        
+//        cell.configure(row: row)
+        
+        return cell
+    }
+    
     
 }
