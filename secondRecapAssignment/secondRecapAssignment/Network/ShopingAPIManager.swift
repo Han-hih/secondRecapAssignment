@@ -15,13 +15,11 @@ class ShopingAPIManager {
     
     
     func listRequest(query: String, sort: String, completionHandler: @escaping (Shoping?) -> Void) {
-        print(#function)
-    guard let url = URL(string: URL.makeURL(query, sort)) else { print("DDD")
-                                                                        return }
+    guard let url = URL(string: URL.makeURL(query, sort)) else { return }
     var request = URLRequest(url: url)
     request.addValue(APIKey.naverID, forHTTPHeaderField: "x-naver-client-id")
     request.addValue(APIKey.naverClientSecret, forHTTPHeaderField: "x-naver-client-secret")
-        print(url)
+//        print(url)
     let statusCode = 200...500
     
     URLSession.shared.dataTask(with: request) { data, response, error in

@@ -69,7 +69,7 @@ class ViewController: UIViewController {
         
         return collectionView
     }()
-    var list: Shoping = Shoping(total: 0, start: 0, display: 30, items: [])
+    var list: [items] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,14 +88,22 @@ class ViewController: UIViewController {
     }
     
     func callShopingRequest(_ query: String, _ sort: String) {
-        print(#function)
         ShopingAPIManager.shared.listRequest(query: query, sort: sort) { value in
-            guard let data = value else {
-                print("Error")
-                return
+            for item in value?.items ?? [] {
+                let title = item.title
+                let mallName = item.mallName
+                let image = item.image
+                let id = item.productId
+                let price = item.lprice
+                self.list.append(items(title: title, image: image, mallName: mallName ?? "네이버쇼핑", lprice: price ,productId: id))
             }
-            self.list = data
-            print(self.list)
+            self.collectionView.reloadData()
+//            guard let data = value?.items else {
+//                print("Error")
+//                return
+//            }
+            
+//            print(self.list)
         }
         
     }
@@ -148,14 +156,15 @@ extension ViewController: UISearchBarDelegate {
 }
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        print(list.count, "______________________________--")
+        return list.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShopingListViewControllerCell.identifier, for: indexPath) as? ShopingListViewControllerCell else { return UICollectionViewCell() }
-        
-        
-//        cell.configure(row: row)
+        cell.shoppingImageView.backgroundColor = .blue
+        let row = list[indexPath.row]
+        cell.configure(row: row)
         
         return cell
     }

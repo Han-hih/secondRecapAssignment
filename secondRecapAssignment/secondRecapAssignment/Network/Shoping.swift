@@ -16,8 +16,8 @@ struct Shoping: Codable {
 
 struct items: Codable {
     let title: String
-    let link: String
     let image: String
     let mallName: String?
+    let lprice: String
     let productId: String
 }

@@ -20,9 +20,10 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    let shoppingImageView = {
+    lazy var shoppingImageView = {
         let view = UIImageView()
         view.layer.cornerRadius = 20
+        view.clipsToBounds = true
         view.backgroundColor = .systemPink
         return view
         
@@ -45,7 +46,7 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
         return button
     }()
     
-    let mallNameLabel = {
+    lazy var mallNameLabel = {
         let label = UILabel()
         label.textColor = .lightGray
         label.sizeToFit()
@@ -54,16 +55,15 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
         return label
     }()
     
-    let titleLabel = {
+    lazy var titleLabel = {
         let label = UILabel()
         label.textColor = .black
         label.font = .systemFont(ofSize: 15)
         label.numberOfLines = 2
-        label.text = "sddfaldfsdfasfdasfsdfaff"
         return label
     }()
     //숫자가 커질 때 글자크기가 작아지게
-    let priceLabel = {
+    lazy var priceLabel = {
         let label = UILabel()
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
@@ -72,10 +72,22 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
         label.numberOfLines = 1
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.4 // 줄어들 수 있는 비율
-        label.text = numberFormatter.string(from: 12344000) // 대략 100억 까지만 으로 가정
+//        label.text = numberFormatter.string(from: priceLabel.text) // 대략 100억 까지만 으로 가정
 
         return label
     }()
+    
+    func configure(row: items) {
+        mallNameLabel.text = "\(row.mallName ?? "네이버쇼핑")"
+        titleLabel.text = "\(row.title)".replacingOccurrences(of: "</b>", with: "").replacingOccurrences(of: "<b>", with: "")
+        let numberformatter = NumberFormatter()
+        numberformatter.numberStyle = .decimal
+        priceLabel.text = numberformatter.string(from: (Int(row.lprice) ?? 0) as NSNumber)
+        guard let url = URL(string: row.image) else { return }
+        shoppingImageView.load(url: url)
+        
+        
+    }
     
     override func configure() {
         [shoppingImageView, buttonView, heartButton, mallNameLabel, titleLabel, priceLabel].forEach {
@@ -118,9 +130,17 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
         ])
     }
     
-    
-    
-    
-    
-    
+}
+extension UIImageView {
+    func load(url: URL) {
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.image = image
+                    }
+                }
+            }
+        }
+    }
 }
