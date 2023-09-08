@@ -9,12 +9,14 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let searchBar = {
+    lazy var searchBar = {
     let view = UISearchBar()
+        view.delegate = self
         view.placeholder = "검색어를 입력해주세요"
         view.showsCancelButton = true
         view.setImage(UIImage(named: "isSearchNonW"), for: UISearchBar.Icon.search, state: .normal)
         view.setImage(UIImage(named: "isCancel"), for: .clear, state: .normal)
+        view.setValue("취소", forKey: "cancelButtonText")
         view.searchBarStyle = .minimal
         return view
     }()
@@ -71,15 +73,13 @@ class ViewController: UIViewController {
         
         return collectionView
     }()
+    
     var list: [items] = []
-    var page = 1
-    var totalPage = 0
+    var start = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        callShopingRequest("캠핑카", "sim", page)
         view.backgroundColor = .white
-        searchBar.delegate = self
         
         [searchBar, buttonView, accuracyButton, dateButton, highPriceButton, lowPriceButton, collectionView].forEach {
             view.addSubview($0)
@@ -93,7 +93,6 @@ class ViewController: UIViewController {
     
         func callShopingRequest(_ query: String, _ sort: String, _ page: Int) {
         ShopingAPIManager.shared.listRequest(query: query, sort: sort, page: page) { value in
-            self.totalPage = value?.total ?? 0
             for item in value?.items ?? [] {
                 let title = item.title
                 let mallName = item.mallName
@@ -156,19 +155,35 @@ class ViewController: UIViewController {
     }
     
 }
+
 extension ViewController: UISearchBarDelegate {
-    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        collectionView.reloadData()
+        start = 1
+        list.removeAll()
+        guard let query = searchBar.text else { return }
+        callShopingRequest(query, "sim", start)
+    }
 }
+// 데이터가 계속 있으면 상관없지만 51개, 40몇개 등등 있을 때 어떻게 페이지네이션을 처리해줄지...
+// 애초에 start가 100이 최대로 고정되어 있어서 따로 고려안해줘도 된다..?
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        print(#function)
         for indexPath in indexPaths {
-            if list.count - 1 == indexPath.row && page < totalPage {
-                page += 1
-                callShopingRequest("캠핑카", "sim", page)
+            if list.count - 1 == indexPath.item && start < 1000  {
+                // display가 30개로 기본 세팅 되어있어서 30개씩 플러스 해줘야 다음 페이지로 넘어간다.
+                //뭔가 말로 설명이 잘 안된다,
+                start += 30
+                print(list.count)
+                guard let query = searchBar.text else { return }
+                callShopingRequest(query, "sim", start)
                 
             }
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
+        print("___________________")
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
