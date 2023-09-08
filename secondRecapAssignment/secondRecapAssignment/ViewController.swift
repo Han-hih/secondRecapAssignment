@@ -26,28 +26,28 @@ class ViewController: UIViewController {
     
     let accuracyButton = {
         let button = CustomButton()
-        button.setTitle("정확도", for: .normal)
+        button.setTitle(" 정확도 ", for: .normal)
         
         return button
     }()
     
     let dateButton = {
         let button = CustomButton()
-        button.setTitle("날짜순", for: .normal)
+        button.setTitle(" 날짜순 ", for: .normal)
         
         return button
     }()
     
     let highPriceButton = {
         let button = CustomButton()
-        button.setTitle("가격높은순", for: .normal)
+        button.setTitle(" 가격높은순 ", for: .normal)
         
         return button
     }()
     
     let lowPriceButton = {
         let button = CustomButton()
-        button.setTitle("가격낮은순", for: .normal)
+        button.setTitle(" 가격낮은순 ", for: .normal)
         
         return button
     }()
