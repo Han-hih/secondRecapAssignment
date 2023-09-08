@@ -29,19 +29,14 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
         
     }()
     
-    let buttonView = {
-        let view = UIView()
-        view.backgroundColor = .white
-        view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.clear.cgColor
-        view.layer.cornerRadius = view.frame.width / 2
-        view.layer.masksToBounds = true
-        return view
-    }()
-    
-    let heartButton = {
+    lazy var heartButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "heart"), for: .normal)
+        button.backgroundColor = .white
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.cornerRadius = button.layer.frame.size.height / 2
+        button.clipsToBounds = true
         button.tintColor = .black
         return button
     }()
@@ -90,7 +85,7 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
     }
     
     override func configure() {
-        [shoppingImageView, buttonView, heartButton, mallNameLabel, titleLabel, priceLabel].forEach {
+        [shoppingImageView, heartButton, mallNameLabel, titleLabel, priceLabel].forEach {
             contentView.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -106,14 +101,11 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
             shoppingImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             shoppingImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             shoppingImageView.heightAnchor.constraint(equalTo: contentView.widthAnchor),
-            //하트버튼이 들어갈 뷰
-            buttonView.trailingAnchor.constraint(equalTo: shoppingImageView.trailingAnchor, constant: -10),
-            buttonView.bottomAnchor.constraint(equalTo: shoppingImageView.bottomAnchor, constant: -10),
-            buttonView.heightAnchor.constraint(equalTo: shoppingImageView.heightAnchor, multiplier: 0.2),
-            buttonView.widthAnchor.constraint(equalTo: buttonView.heightAnchor),
             //하트버튼
-            heartButton.centerXAnchor.constraint(equalTo: buttonView.centerXAnchor),
-            heartButton.centerYAnchor.constraint(equalTo: buttonView.centerYAnchor),
+            heartButton.trailingAnchor.constraint(equalTo: shoppingImageView.trailingAnchor, constant: -10),
+            heartButton.bottomAnchor.constraint(equalTo: shoppingImageView.bottomAnchor, constant: -10),
+            heartButton.heightAnchor.constraint(equalTo: shoppingImageView.heightAnchor, multiplier: 0.2),
+            heartButton.widthAnchor.constraint(equalTo: heartButton.heightAnchor),
             //쇼핑몰네임
             mallNameLabel.topAnchor.constraint(equalTo: shoppingImageView.bottomAnchor, constant: 5),
             mallNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
