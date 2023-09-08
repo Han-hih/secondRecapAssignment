@@ -22,7 +22,7 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
     
     let shoppingImageView = {
         let view = UIImageView()
-        view.layer.cornerRadius = 10
+        view.layer.cornerRadius = 20
         view.backgroundColor = .systemPink
         return view
         
@@ -56,7 +56,7 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
     
     let titleLabel = {
         let label = UILabel()
-        label.textColor = .white
+        label.textColor = .black
         label.font = .systemFont(ofSize: 15)
         label.numberOfLines = 2
         label.text = "sddfaldfsdfasfdasfsdfaff"
@@ -67,7 +67,7 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
         let label = UILabel()
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
-        label.textColor = .white
+        label.textColor = .black
         label.font = .boldSystemFont(ofSize: 25)
         label.numberOfLines = 1
         label.adjustsFontSizeToFitWidth = true
@@ -85,8 +85,8 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
     }
     
     override func setConstraints() {
-        contentView.layer.cornerRadius = 10
-        contentView.backgroundColor = .cyan
+//        contentView.layer.cornerRadius = 30 // 있을 필요가 없다...?
+        contentView.backgroundColor = .white
         
         NSLayoutConstraint.activate([
             //쇼핑 이미지
