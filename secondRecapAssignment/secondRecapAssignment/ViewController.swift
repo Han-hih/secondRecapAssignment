@@ -69,11 +69,14 @@ class ViewController: UIViewController {
         
         return collectionView
     }()
+    var list: Shoping = Shoping(total: 0, start: 0, display: 30, items: [])
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        callShopingRequest("캠핑카", "sim")
         view.backgroundColor = .white
         searchBar.delegate = self
+        
         [searchBar, buttonView, accuracyButton, dateButton, highPriceButton, lowPriceButton, collectionView].forEach {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -84,6 +87,18 @@ class ViewController: UIViewController {
         setConstraints()
     }
     
+    func callShopingRequest(_ query: String, _ sort: String) {
+        print(#function)
+        ShopingAPIManager.shared.listRequest(query: query, sort: sort) { value in
+            guard let data = value else {
+                print("Error")
+                return
+            }
+            self.list = data
+            print(self.list)
+        }
+        
+    }
     
     func setNavigationBar() {
         self.navigationItem.title = "쇼핑 검색"

@@ -20,6 +20,9 @@
 		8066DC9B2AAA2F41003EB4B6 /* ReusableViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8066DC9A2AAA2F41003EB4B6 /* ReusableViewProtocol.swift */; };
 		8066DC9D2AAA32D3003EB4B6 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8066DC9C2AAA32D3003EB4B6 /* BaseCollectionViewCell.swift */; };
 		8066DC9F2AAA334C003EB4B6 /* ShopingListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8066DC9E2AAA334C003EB4B6 /* ShopingListCollectionViewCell.swift */; };
+		8066DCA62AAAEABE003EB4B6 /* ShopingAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8066DCA52AAAEABE003EB4B6 /* ShopingAPIManager.swift */; };
+		8066DCA82AAAECE4003EB4B6 /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8066DCA72AAAECE4003EB4B6 /* URL+Extension.swift */; };
+		8066DCAA2AAAF09D003EB4B6 /* Shoping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8066DCA92AAAF09D003EB4B6 /* Shoping.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +41,9 @@
 		8066DC9A2AAA2F41003EB4B6 /* ReusableViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableViewProtocol.swift; sourceTree = "<group>"; };
 		8066DC9C2AAA32D3003EB4B6 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		8066DC9E2AAA334C003EB4B6 /* ShopingListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopingListCollectionViewCell.swift; sourceTree = "<group>"; };
+		8066DCA52AAAEABE003EB4B6 /* ShopingAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopingAPIManager.swift; sourceTree = "<group>"; };
+		8066DCA72AAAECE4003EB4B6 /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
+		8066DCA92AAAF09D003EB4B6 /* Shoping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shoping.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,21 +77,32 @@
 		8066DC742AA9DFB9003EB4B6 /* secondRecapAssignment */ = {
 			isa = PBXGroup;
 			children = (
+				8066DCAB2AAAF0A5003EB4B6 /* Network */,
 				8066DC752AA9DFB9003EB4B6 /* AppDelegate.swift */,
 				8066DC772AA9DFB9003EB4B6 /* SceneDelegate.swift */,
 				8066DC932AA9F0C7003EB4B6 /* LikeViewController.swift */,
 				8066DC792AA9DFB9003EB4B6 /* ViewController.swift */,
 				8066DC9C2AAA32D3003EB4B6 /* BaseCollectionViewCell.swift */,
 				8066DC9E2AAA334C003EB4B6 /* ShopingListCollectionViewCell.swift */,
-				8066DC9A2AAA2F41003EB4B6 /* ReusableViewProtocol.swift */,
 				8066DC952AAA1FE6003EB4B6 /* CustomButton.swift */,
 				8066DC7B2AA9DFB9003EB4B6 /* Main.storyboard */,
 				8066DC7E2AA9DFBA003EB4B6 /* Assets.xcassets */,
 				8066DC802AA9DFBA003EB4B6 /* LaunchScreen.storyboard */,
 				8066DC832AA9DFBA003EB4B6 /* Info.plist */,
+				8066DC9A2AAA2F41003EB4B6 /* ReusableViewProtocol.swift */,
 				8066DC8E2AA9E55B003EB4B6 /* APIKey.swift */,
 			);
 			path = secondRecapAssignment;
+			sourceTree = "<group>";
+		};
+		8066DCAB2AAAF0A5003EB4B6 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				8066DCA52AAAEABE003EB4B6 /* ShopingAPIManager.swift */,
+				8066DCA92AAAF09D003EB4B6 /* Shoping.swift */,
+				8066DCA72AAAECE4003EB4B6 /* URL+Extension.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,8 +180,11 @@
 				8066DC7A2AA9DFB9003EB4B6 /* ViewController.swift in Sources */,
 				8066DC9D2AAA32D3003EB4B6 /* BaseCollectionViewCell.swift in Sources */,
 				8066DC9F2AAA334C003EB4B6 /* ShopingListCollectionViewCell.swift in Sources */,
+				8066DCA82AAAECE4003EB4B6 /* URL+Extension.swift in Sources */,
+				8066DCAA2AAAF09D003EB4B6 /* Shoping.swift in Sources */,
 				8066DC762AA9DFB9003EB4B6 /* AppDelegate.swift in Sources */,
 				8066DC962AAA1FE6003EB4B6 /* CustomButton.swift in Sources */,
+				8066DCA62AAAEABE003EB4B6 /* ShopingAPIManager.swift in Sources */,
 				8066DC8F2AA9E55B003EB4B6 /* APIKey.swift in Sources */,
 				8066DC9B2AAA2F41003EB4B6 /* ReusableViewProtocol.swift in Sources */,
 				8066DC782AA9DFB9003EB4B6 /* SceneDelegate.swift in Sources */,
