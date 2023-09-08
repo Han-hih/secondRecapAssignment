@@ -15,6 +15,7 @@ class ViewController: UIViewController {
         view.showsCancelButton = true
         view.setImage(UIImage(named: "isSearchNonW"), for: UISearchBar.Icon.search, state: .normal)
         view.setImage(UIImage(named: "isCancel"), for: .clear, state: .normal)
+        view.searchBarStyle = .minimal
         return view
     }()
     
