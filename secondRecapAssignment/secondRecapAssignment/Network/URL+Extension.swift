@@ -10,9 +10,9 @@ import Foundation
 extension URL {
     static let baseURL = "https://openapi.naver.com/v1/search/shop.json?query="
     
-    static func makeURL(_ query: String, _ sort: String) -> String {
+    static func makeURL(_ query: String, _ sort: String, _ page: Int) -> String {
         guard let data = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return "" }
-
-        return baseURL + "\(data)" + "&display=30&sort=" + sort
+        
+        return baseURL + "\(data)&display=30&start=\(page)&sort=\(sort)"
     }
 }

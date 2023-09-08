@@ -67,14 +67,17 @@ class ViewController: UIViewController {
         
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.prefetchDataSource = self
         
         return collectionView
     }()
     var list: [items] = []
+    var page = 1
+    var totalPage = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        callShopingRequest("캠핑카", "sim")
+        callShopingRequest("캠핑카", "sim", page)
         view.backgroundColor = .white
         searchBar.delegate = self
         
@@ -88,8 +91,9 @@ class ViewController: UIViewController {
         setConstraints()
     }
     
-    func callShopingRequest(_ query: String, _ sort: String) {
-        ShopingAPIManager.shared.listRequest(query: query, sort: sort) { value in
+        func callShopingRequest(_ query: String, _ sort: String, _ page: Int) {
+        ShopingAPIManager.shared.listRequest(query: query, sort: sort, page: page) { value in
+            self.totalPage = value?.total ?? 0
             for item in value?.items ?? [] {
                 let title = item.title
                 let mallName = item.mallName
@@ -155,15 +159,24 @@ class ViewController: UIViewController {
 extension ViewController: UISearchBarDelegate {
     
 }
-extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        print(#function)
+        for indexPath in indexPaths {
+            if list.count - 1 == indexPath.row && page < totalPage {
+                page += 1
+                callShopingRequest("캠핑카", "sim", page)
+                
+            }
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(list.count, "______________________________--")
         return list.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShopingListViewControllerCell.identifier, for: indexPath) as? ShopingListViewControllerCell else { return UICollectionViewCell() }
-        cell.shoppingImageView.backgroundColor = .blue
         let row = list[indexPath.row]
         cell.configure(row: row)
         
