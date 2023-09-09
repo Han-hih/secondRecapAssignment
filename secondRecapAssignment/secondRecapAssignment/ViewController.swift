@@ -10,7 +10,7 @@ import UIKit
 class ViewController: UIViewController {
     
     lazy var searchBar = {
-    let view = UISearchBar()
+        let view = UISearchBar()
         view.delegate = self
         view.placeholder = "검색어를 입력해주세요"
         view.showsCancelButton = true
@@ -27,31 +27,31 @@ class ViewController: UIViewController {
         return view
     }()
     
-    let accuracyButton = {
+    lazy var accuracyButton = {
         let button = CustomButton()
         button.setTitle(" 정확도 ", for: .normal)
         
         return button
     }()
     
-    let dateButton = {
+    lazy var dateButton = {
         let button = CustomButton()
         button.setTitle(" 날짜순 ", for: .normal)
-        
+        button.addTarget(self, action: #selector(dateSort), for: .touchUpInside)
         return button
     }()
     
-    let highPriceButton = {
+    lazy var highPriceButton = {
         let button = CustomButton()
         button.setTitle(" 가격높은순 ", for: .normal)
-        
+        button.addTarget(self, action: #selector(highPriceSort), for: .touchUpInside)
         return button
     }()
     
-    let lowPriceButton = {
+    lazy var lowPriceButton = {
         let button = CustomButton()
         button.setTitle(" 가격낮은순 ", for: .normal)
-        
+        button.addTarget(self, action: #selector(lowPriceSort), for: .touchUpInside)
         return button
     }()
     
@@ -76,11 +76,14 @@ class ViewController: UIViewController {
     
     var list: [items] = []
     var start = 1
-    
+    var sort = "sim"
+    var buttonArray: [UIButton] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
+        [accuracyButton, dateButton, highPriceButton, lowPriceButton].forEach {
+            buttonArray.append($0)
+        }
         [searchBar, buttonView, accuracyButton, dateButton, highPriceButton, lowPriceButton, collectionView].forEach {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -91,7 +94,30 @@ class ViewController: UIViewController {
         setConstraints()
     }
     
-        func callShopingRequest(_ query: String, _ sort: String, _ page: Int) {
+    //다른 버튼을 토글해주는 것이 안됨
+        @objc func accuracySort() {
+            if accuracyButton.backgroundColor == .black {
+                sort = "sim"
+                print(sort)
+            }
+        }
+    @objc func dateSort() {
+        if dateButton.backgroundColor == .black {
+            sort = "date"
+        }
+    }
+    @objc func highPriceSort() {
+        if highPriceButton.backgroundColor == .black {
+            sort = "dsc"
+        }
+    }
+    @objc func lowPriceSort() {
+        if lowPriceButton.backgroundColor == .black {
+            sort = "asc"
+        }
+    }
+    
+    func callShopingRequest(_ query: String, _ sort: String, _ page: Int) {
         ShopingAPIManager.shared.listRequest(query: query, sort: sort, page: page) { value in
             for item in value?.items ?? [] {
                 let title = item.title
@@ -102,12 +128,12 @@ class ViewController: UIViewController {
                 self.list.append(items(title: title, image: image, mallName: mallName ?? "네이버쇼핑", lprice: price ,productId: id))
             }
             self.collectionView.reloadData()
-//            guard let data = value?.items else {
-//                print("Error")
-//                return
-//            }
+            //            guard let data = value?.items else {
+            //                print("Error")
+            //                return
+            //            }
             
-//            print(self.list)
+            //            print(self.list)
         }
         
     }
@@ -162,7 +188,8 @@ extension ViewController: UISearchBarDelegate {
         start = 1
         list.removeAll()
         guard let query = searchBar.text else { return }
-        callShopingRequest(query, "sim", start)
+        callShopingRequest(query, sort, start)
+        print(sort)
     }
 }
 // 데이터가 계속 있으면 상관없지만 51개, 40몇개 등등 있을 때 어떻게 페이지네이션을 처리해줄지...
