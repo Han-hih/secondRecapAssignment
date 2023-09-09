@@ -30,7 +30,7 @@ class ViewController: UIViewController {
     lazy var accuracyButton = {
         let button = CustomButton()
         button.setTitle(" 정확도 ", for: .normal)
-        
+        button.addTarget(self, action: #selector(accuracySort), for: .touchUpInside)
         return button
     }()
     
@@ -101,35 +101,59 @@ class ViewController: UIViewController {
 //        }
 //    }
     
-    //다른 버튼을 토글해주는 것이 안됨
+    //휴먼에러.......................
+    // 어차피 마지막 누른 버튼값으로 sort가 들어가니까
         @objc func accuracySort() {
             if accuracyButton.backgroundColor == .black {
                 sort = "sim"
-                //다른방법 찾아보기
-//                buttonArray.remove(at: 0)
-//                buttonArray.forEach {
-//                    $0.setTitleColor(.black, for: .normal)
-//                    $0.backgroundColor = .white
-//                }
-                print(sort)
+                // 버튼이 고정되어 있으니까 remove를 index 번호로 설정
+                //버튼을 계속 누르면 index가 사라진다
+                buttonArray.remove(at: 0)
+                buttonArray.forEach {
+                    $0.setTitleColor(.black, for: .normal)
+                    $0.backgroundColor = .white
+                }
+                //다시 추가해준다.
+                buttonArray.insert(accuracyButton, at: 0)
             }
         }
     @objc func dateSort() {
         if dateButton.backgroundColor == .black {
             sort = "date"
+            buttonArray.remove(at: 1)
+            buttonArray.forEach {
+                $0.setTitleColor(.black, for: .normal)
+                $0.backgroundColor = .white
+            }
+            buttonArray.insert(dateButton, at: 1)
         }
     }
     @objc func highPriceSort() {
         if highPriceButton.backgroundColor == .black {
             sort = "dsc"
+            buttonArray.remove(at: 2)
+            buttonArray.forEach {
+                $0.setTitleColor(.black, for: .normal)
+                $0.backgroundColor = .white
+            }
+            buttonArray.insert(highPriceButton, at: 2)
         }
     }
     @objc func lowPriceSort() {
         if lowPriceButton.backgroundColor == .black {
             sort = "asc"
+            buttonArray.remove(at: 3)
+            buttonArray.forEach {
+                $0.setTitleColor(.black, for: .normal)
+                $0.backgroundColor = .white
+            }
+            buttonArray.insert(lowPriceButton, at: 3)
         }
     }
     
+    @objc func heartButtonTapped() {
+        
+    }
     func callShopingRequest(_ query: String, _ sort: String, _ page: Int) {
         ShopingAPIManager.shared.listRequest(query: query, sort: sort, page: page) { value in
             for item in value?.items ?? [] {
