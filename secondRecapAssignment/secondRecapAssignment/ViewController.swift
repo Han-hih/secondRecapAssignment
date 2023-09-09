@@ -88,16 +88,29 @@ class ViewController: UIViewController {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
-        
         setNavigationBar()
         
         setConstraints()
     }
+    //sort값에 따라 버튼색상을 변경한다..?
+//    func changedButtonColor() {
+//        if sort == "sim" {
+//            dateButton.backgroundColor = .green
+//        } else {
+//            dateButton.backgroundColor = .red
+//        }
+//    }
     
     //다른 버튼을 토글해주는 것이 안됨
         @objc func accuracySort() {
             if accuracyButton.backgroundColor == .black {
                 sort = "sim"
+                //다른방법 찾아보기
+//                buttonArray.remove(at: 0)
+//                buttonArray.forEach {
+//                    $0.setTitleColor(.black, for: .normal)
+//                    $0.backgroundColor = .white
+//                }
                 print(sort)
             }
         }
