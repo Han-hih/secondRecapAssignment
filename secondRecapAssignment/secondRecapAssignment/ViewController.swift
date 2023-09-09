@@ -15,11 +15,13 @@ class ViewController: UIViewController {
         let view = UISearchBar()
         view.delegate = self
         view.placeholder = "검색어를 입력해주세요"
+        view.setValue("취소", forKey: "cancelButtonText")
         view.showsCancelButton = true
         view.setImage(UIImage(named: "isSearchNonW"), for: UISearchBar.Icon.search, state: .normal)
         view.setImage(UIImage(named: "isCancel"), for: .clear, state: .normal)
-        view.setValue("취소", forKey: "cancelButtonText")
         view.searchBarStyle = .minimal
+        view.resignFirstResponder()
+        
         return view
     }()
     
@@ -72,6 +74,8 @@ class ViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.prefetchDataSource = self
+        collectionView.keyboardDismissMode = .onDrag
+        
         
         return collectionView
     }()
