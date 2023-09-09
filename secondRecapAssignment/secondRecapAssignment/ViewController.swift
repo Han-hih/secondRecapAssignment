@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class ViewController: UIViewController {
     
@@ -78,6 +79,8 @@ class ViewController: UIViewController {
     var start = 1
     var sort = "sim"
     var buttonArray: [UIButton] = []
+    var shoppingList: Results<ShoppingTable>
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white

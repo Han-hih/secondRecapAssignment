@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import RealmSwift
 class ShopingListViewControllerCell: BaseCollectionViewCell {
     
     
@@ -86,6 +86,7 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
     
     @objc func heartButtonToggle() {
         toggleButtonChecked.toggle()
+        
         if toggleButtonChecked == false {
             heartButton.setImage(UIImage(systemName: "heart"), for: .normal)
         } else {
