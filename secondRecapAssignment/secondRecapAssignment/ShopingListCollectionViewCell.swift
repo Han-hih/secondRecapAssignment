@@ -38,6 +38,7 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
         button.layer.cornerRadius = button.layer.frame.size.height / 2
         button.clipsToBounds = true
         button.tintColor = .black
+        button.addTarget(self, action: #selector(heartButtonToggle), for: .touchUpInside)
         return button
     }()
     
@@ -71,7 +72,7 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
 
         return label
     }()
-    
+    var toggleButtonChecked = false
     func configure(row: items) {
         mallNameLabel.text = "\(row.mallName ?? "네이버쇼핑")"
         titleLabel.text = "\(row.title)".replacingOccurrences(of: "</b>", with: "").replacingOccurrences(of: "<b>", with: "")
@@ -82,6 +83,15 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
         shoppingImageView.load(url: url)
         
         
+    }
+    
+    @objc func heartButtonToggle() {
+        toggleButtonChecked.toggle()
+        if toggleButtonChecked == false {
+            heartButton.setImage(UIImage(systemName: "heart"), for: .normal)
+        } else {
+            heartButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        }
     }
     
     override func configure() {

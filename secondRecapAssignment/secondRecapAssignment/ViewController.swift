@@ -104,6 +104,7 @@ class ViewController: UIViewController {
     //휴먼에러.......................
     // 어차피 마지막 누른 버튼값으로 sort가 들어가니까
     // 정렬을 두개(ex 정확도 + 오름차순)이상으로 하고 싶다면 배열사용..? 오름차순 + 내림차순 일 때 문제가 생겨서 다른 방식으로
+    //검색을 한 상태에서도 다시 리로드 되도록
         @objc func accuracySort() {
             if accuracyButton.backgroundColor == .black {
                 sort = "sim"
