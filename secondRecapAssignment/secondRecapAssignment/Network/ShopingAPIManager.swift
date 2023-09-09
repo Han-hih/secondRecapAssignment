@@ -44,7 +44,7 @@ class ShopingAPIManager {
             do {
                 let result = try JSONDecoder().decode(Shoping.self, from: data)
                 completionHandler(result)
-                print(result)
+//                print(result)
                 return
             }
             catch {

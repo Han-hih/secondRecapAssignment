@@ -9,17 +9,45 @@ import UIKit
 import RealmSwift
 
 protocol ShopingListRepositoryType: AnyObject {
-    func updateItem(id: ObjectId, image: String, name: String, title: String, price: String, like: Bool)
+    func createItem(_ item: ShoppingTable)
+    func removeItem(_ item: ShoppingTable)
+    func updateItem(id: ObjectId, image: String, name: String?, title: String, price: String)
 }
 
 class ShopingListRepository: ShopingListRepositoryType {
     
+    static let shared = ShopingListRepository()
     private let realm = try! Realm()
-    func updateItem(id: ObjectId, image: String, name: String, title: String, price: String, like: Bool) {
+    private init() { }
+    
+    func createItem(_ item: ShoppingTable) {
+//        print(realm.configuration.fileURL)
+        do {
+            try realm.write {
+                realm.add(item, update: .modified) //없다면 add하고 기본키가 같다면 update한다
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    func removeItem(_ item: ShoppingTable) {
+//        print(realm.configuration.fileURL)
+        do {
+            guard let task = realm.objects(ShoppingTable.self).filter({ $0._id == item._id }).first else { return }
+            try realm.write {
+                realm.delete(task)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    func updateItem(id: RealmSwift.ObjectId, image: String, name: String?, title: String, price: String) {
         do {
             try realm.write {
                 
-                realm.create(ShoppingTable.self, value: ["_id": id, "productImage": image, "mallName": name, "productTitle": title, "price": price, "like": like ], update: .modified)
+                realm.create(ShoppingTable.self, value: ["_id": id, "productImage": image, "mallName": name ?? "네이버 쇼핑" , "productTitle": title, "price": price], update: .modified)
             }
         } catch {
             print("dddd")

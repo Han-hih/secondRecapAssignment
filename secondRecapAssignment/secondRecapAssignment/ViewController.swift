@@ -10,6 +10,7 @@ import RealmSwift
 
 class ViewController: UIViewController {
     
+    static let shared = ViewController()
     lazy var searchBar = {
         let view = UISearchBar()
         view.delegate = self
@@ -76,10 +77,12 @@ class ViewController: UIViewController {
     }()
     
     var list: [items] = []
+    var shopping = Shoping(total: 0, start: 0, display: 0, items: [])
     var start = 1
     var sort = "sim"
     var buttonArray: [UIButton] = []
-    var shoppingList: Results<ShoppingTable>
+    var shoppingList: Results<ShoppingTable>!
+    let shoppingListRepository = ShopingListRepository.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,7 +102,7 @@ class ViewController: UIViewController {
     //휴먼에러.......................
     // 어차피 마지막 누른 버튼값으로 sort가 들어가니까
     // 정렬을 두개(ex 정확도 + 오름차순)이상으로 하고 싶다면 배열사용..? 오름차순 + 내림차순 일 때 문제가 생겨서 다른 방식으로
-    //검색을 한 상태에서도 다시 리로드 되도록
+    //검색을 한 상태에서도 다시 리로드 되도록 바꾸기
         @objc func accuracySort() {
             if accuracyButton.backgroundColor == .black {
                 sort = "sim"
@@ -153,9 +156,8 @@ class ViewController: UIViewController {
         }
     }
     
-    @objc func heartButtonTapped() {
-        
-    }
+   
+    
     func callShopingRequest(_ query: String, _ sort: String, _ page: Int) {
         ShopingAPIManager.shared.listRequest(query: query, sort: sort, page: page) { value in
             for item in value?.items ?? [] {
@@ -165,16 +167,25 @@ class ViewController: UIViewController {
                 let id = item.productId
                 let price = item.lprice
                 self.list.append(items(title: title, image: image, mallName: mallName ?? "네이버쇼핑", lprice: price ,productId: id))
+                
             }
             self.collectionView.reloadData()
-            //            guard let data = value?.items else {
-            //                print("Error")
-            //                return
-            //            }
-            
-            //            print(self.list)
         }
+    }
+    // MARK: - 수정필요
+    @objc func likeButtonTapped(_ sender: UIButton) {
+        let shopping = list[sender.tag]
         
+        let task = ShoppingTable(productImage: shopping.image, mallName: shopping.mallName ?? "[네이버쇼핑]", productTitle: shopping.title, price: shopping.lprice)
+        print(task.like, "1")
+        if sender.imageView?.image == UIImage(systemName: "heart") {
+            ShopingListRepository.shared.createItem(task)
+            sender.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        } else {
+            ShopingListRepository.shared.removeItem(task)
+            sender.setImage(UIImage(systemName: "heart"), for: .normal)
+            print(task.like)
+        }
     }
     
     func setNavigationBar() {
@@ -258,6 +269,8 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShopingListViewControllerCell.identifier, for: indexPath) as? ShopingListViewControllerCell else { return UICollectionViewCell() }
+        cell.heartButton.tag = indexPath.row
+        cell.heartButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
         let row = list[indexPath.row]
         cell.configure(row: row)
         

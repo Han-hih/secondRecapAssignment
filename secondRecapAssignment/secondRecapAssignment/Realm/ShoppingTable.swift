@@ -17,13 +17,13 @@ class ShoppingTable: Object {
     @Persisted var price: String
     @Persisted var like: Bool
     
-    convenience init(productImage: String, mallName: String, productTitle: String, price: String, like: Bool) {
+    convenience init(productImage: String, mallName: String, productTitle: String, price: String) {
         self.init()
         
         self.productImage = productImage
         self.mallName = mallName
         self.productTitle = productTitle
         self.price = price
-        self.like = like
+        self.like = false
     }
 }
