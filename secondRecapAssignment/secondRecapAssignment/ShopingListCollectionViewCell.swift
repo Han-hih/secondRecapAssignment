@@ -82,7 +82,6 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
         guard let url = URL(string: row.image) else { return }
         shoppingImageView.load(url: url)
         
-        
     }
     
     @objc func heartButtonToggle() {

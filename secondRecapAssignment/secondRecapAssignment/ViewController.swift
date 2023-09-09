@@ -92,14 +92,6 @@ class ViewController: UIViewController {
         
         setConstraints()
     }
-    //sort값에 따라 버튼색상을 변경한다..?
-//    func changedButtonColor() {
-//        if sort == "sim" {
-//            dateButton.backgroundColor = .green
-//        } else {
-//            dateButton.backgroundColor = .red
-//        }
-//    }
     
     //휴먼에러.......................
     // 어차피 마지막 누른 버튼값으로 sort가 들어가니까
@@ -109,7 +101,6 @@ class ViewController: UIViewController {
             if accuracyButton.backgroundColor == .black {
                 sort = "sim"
                 // 버튼이 고정되어 있으니까 remove를 index 번호로 설정
-                //버튼을 계속 누르면 index가 사라진다
                 buttonArray.remove(at: 0)
                 buttonArray.forEach {
                     $0.setTitleColor(.black, for: .normal)
