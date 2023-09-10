@@ -51,6 +51,7 @@ class LikeViewController: BaseViewController {
         super.viewWillAppear(animated)
         let realm = try! Realm()
         tasks = realm.objects(ShoppingTable.self).sorted(byKeyPath: "date", ascending: false)
+        collectionView.reloadData()
         
     }
     
