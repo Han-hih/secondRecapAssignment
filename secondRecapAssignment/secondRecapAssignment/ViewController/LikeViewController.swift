@@ -129,4 +129,10 @@ extension LikeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         return cell
     }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = WebkitViewController()
+        vc.id = tasks[indexPath.row].productId
+        print(vc.id)
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
