@@ -27,6 +27,8 @@
 		8066DCB32AAC4DF6003EB4B6 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8066DCB22AAC4DF6003EB4B6 /* RealmSwift */; };
 		8066DCB52AAC4E28003EB4B6 /* ShoppingTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8066DCB42AAC4E28003EB4B6 /* ShoppingTable.swift */; };
 		8066DCB72AAC559A003EB4B6 /* ShopingListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8066DCB62AAC559A003EB4B6 /* ShopingListRepository.swift */; };
+		8066DCBB2AAD72FD003EB4B6 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8066DCBA2AAD72FD003EB4B6 /* Color.swift */; };
+		8066DCBD2AAD7448003EB4B6 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8066DCBC2AAD7448003EB4B6 /* BaseViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,8 @@
 		8066DCA92AAAF09D003EB4B6 /* Shoping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shoping.swift; sourceTree = "<group>"; };
 		8066DCB42AAC4E28003EB4B6 /* ShoppingTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingTable.swift; sourceTree = "<group>"; };
 		8066DCB62AAC559A003EB4B6 /* ShopingListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopingListRepository.swift; sourceTree = "<group>"; };
+		8066DCBA2AAD72FD003EB4B6 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		8066DCBC2AAD7448003EB4B6 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,13 +91,11 @@
 		8066DC742AA9DFB9003EB4B6 /* secondRecapAssignment */ = {
 			isa = PBXGroup;
 			children = (
+				8066DCBF2AAD74EB003EB4B6 /* ViewController */,
+				8066DCBE2AAD74C4003EB4B6 /* Base */,
+				8066DCB92AAD72E6003EB4B6 /* Utility */,
 				8066DCB82AAC55A2003EB4B6 /* Realm */,
 				8066DCAB2AAAF0A5003EB4B6 /* Network */,
-				8066DC932AA9F0C7003EB4B6 /* LikeViewController.swift */,
-				8066DC792AA9DFB9003EB4B6 /* ViewController.swift */,
-				8066DC9E2AAA334C003EB4B6 /* ShopingListCollectionViewCell.swift */,
-				8066DC9C2AAA32D3003EB4B6 /* BaseCollectionViewCell.swift */,
-				8066DC952AAA1FE6003EB4B6 /* CustomButton.swift */,
 				8066DC7B2AA9DFB9003EB4B6 /* Main.storyboard */,
 				8066DC7E2AA9DFBA003EB4B6 /* Assets.xcassets */,
 				8066DC802AA9DFBA003EB4B6 /* LaunchScreen.storyboard */,
@@ -121,6 +123,34 @@
 				8066DCB62AAC559A003EB4B6 /* ShopingListRepository.swift */,
 			);
 			path = Realm;
+			sourceTree = "<group>";
+		};
+		8066DCB92AAD72E6003EB4B6 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				8066DCBA2AAD72FD003EB4B6 /* Color.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		8066DCBE2AAD74C4003EB4B6 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				8066DC952AAA1FE6003EB4B6 /* CustomButton.swift */,
+				8066DCBC2AAD7448003EB4B6 /* BaseViewController.swift */,
+				8066DC9C2AAA32D3003EB4B6 /* BaseCollectionViewCell.swift */,
+				8066DC9E2AAA334C003EB4B6 /* ShopingListCollectionViewCell.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		8066DCBF2AAD74EB003EB4B6 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8066DC932AA9F0C7003EB4B6 /* LikeViewController.swift */,
+				8066DC792AA9DFB9003EB4B6 /* ViewController.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -210,10 +240,12 @@
 				8066DC762AA9DFB9003EB4B6 /* AppDelegate.swift in Sources */,
 				8066DCB52AAC4E28003EB4B6 /* ShoppingTable.swift in Sources */,
 				8066DC962AAA1FE6003EB4B6 /* CustomButton.swift in Sources */,
+				8066DCBB2AAD72FD003EB4B6 /* Color.swift in Sources */,
 				8066DCB72AAC559A003EB4B6 /* ShopingListRepository.swift in Sources */,
 				8066DCA62AAAEABE003EB4B6 /* ShopingAPIManager.swift in Sources */,
 				8066DC8F2AA9E55B003EB4B6 /* APIKey.swift in Sources */,
 				8066DC9B2AAA2F41003EB4B6 /* ReusableViewProtocol.swift in Sources */,
+				8066DCBD2AAD7448003EB4B6 /* BaseViewController.swift in Sources */,
 				8066DC782AA9DFB9003EB4B6 /* SceneDelegate.swift in Sources */,
 				8066DC942AA9F0C7003EB4B6 /* LikeViewController.swift in Sources */,
 			);
