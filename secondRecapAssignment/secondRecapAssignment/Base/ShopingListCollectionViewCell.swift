@@ -72,6 +72,8 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
         return label
     }()
     var toggleButtonChecked = false
+    var tasks: Results<ShoppingTable>!
+    
     func configure(row: items) {
         mallNameLabel.text = "\(row.mallName ?? "네이버쇼핑")"
         titleLabel.text = "\(row.title)".replacingOccurrences(of: "</b>", with: "").replacingOccurrences(of: "<b>", with: "")
@@ -81,6 +83,16 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
         guard let url = URL(string: row.image) else { return }
         shoppingImageView.load(url: url)
         
+    }
+    
+    func likeConfigure(row: ShoppingTable) {
+        mallNameLabel.text = "\(row.mallName)"
+        titleLabel.text = "\(row.productTitle)".replacingOccurrences(of: "</b>", with: "").replacingOccurrences(of: "<b>", with: "")
+        let numberformatter = NumberFormatter()
+        numberformatter.numberStyle = .decimal
+        priceLabel.text = numberformatter.string(from: (Int(row.price) ?? 0) as NSNumber)
+        guard let url = URL(string: row.productImage) else { return }
+        shoppingImageView.load(url: url)
     }
     // MARK: - 수정필요
 
