@@ -45,12 +45,13 @@ class LikeViewController: BaseViewController {
     }()
     
     var tasks: Results<ShoppingTable>!
-    
+    var taskList: [ShoppingTable] = []
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let realm = try! Realm()
         tasks = realm.objects(ShoppingTable.self).sorted(byKeyPath: "date", ascending: false)
+        
     }
     
     override func configure() {
@@ -91,18 +92,38 @@ extension LikeViewController: UISearchBarDelegate {
         collectionView.reloadData()
     }
     // 서치바 실시간으로 갱신되도록
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        taskList.removeAll()
+        for item in tasks {
+            if item.productTitle.contains(searchBar.text!) {
+                taskList.append(item)
+            }
+        }
+        collectionView.reloadData()
+        
+        }
 }
 
 extension LikeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return tasks.count
+        if searchBar.text?.isEmpty == true {
+            return tasks.count
+        } else {
+            return taskList.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShopingListViewControllerCell.identifier, for: indexPath) as? ShopingListViewControllerCell else { return UICollectionViewCell() }
         cell.heartButton.tag = indexPath.row
 //        cell.heartButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
-        let row = tasks[indexPath.row]
+        var row = tasks[indexPath.row]
+        if searchBar.text?.isEmpty == true {
+            row = tasks[indexPath.row]
+        } else {
+            row = taskList[indexPath.row]
+        }
+        
         cell.likeConfigure(row: row)
         
         return cell
