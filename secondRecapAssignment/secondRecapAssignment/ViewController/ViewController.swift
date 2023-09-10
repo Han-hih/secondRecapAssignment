@@ -101,6 +101,7 @@ class ViewController: UIViewController {
         setNavigationBar()
         
         setConstraints()
+        shoppingListRepository.checkSchemaVersion()
     }
     
     //휴먼에러.......................

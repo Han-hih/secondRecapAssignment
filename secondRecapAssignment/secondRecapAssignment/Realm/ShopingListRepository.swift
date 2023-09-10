@@ -19,6 +19,14 @@ class ShopingListRepository: ShopingListRepositoryType {
     static let shared = ShopingListRepository()
     private let realm = try! Realm()
     private init() { }
+    func checkSchemaVersion() {
+        do {
+            let version = try schemaVersionAtURL(realm.configuration.fileURL!)
+            print("Schema Version: \(version)")
+        } catch {
+            print(error)
+        }
+    }
     
     func createItem(_ item: ShoppingTable) {
 //        print(realm.configuration.fileURL)
