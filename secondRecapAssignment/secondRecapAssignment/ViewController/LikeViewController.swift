@@ -113,11 +113,21 @@ extension LikeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             return taskList.count
         }
     }
-    
+    @objc func likeButtonTapped(_ sender: UIButton) {
+        let shopping = tasks[sender.tag]
+        
+        let task = ShoppingTable(productId: shopping.productId, productImage: shopping.productImage, mallName: shopping.mallName , productTitle: shopping.productTitle, price: shopping.productTitle)
+        if sender.imageView?.image == UIImage(systemName: "heart.fill") {
+            ShopingListRepository.shared.removeItem(task)
+            collectionView.reloadData()
+        }
+    }
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShopingListViewControllerCell.identifier, for: indexPath) as? ShopingListViewControllerCell else { return UICollectionViewCell() }
         cell.heartButton.tag = indexPath.row
-//        cell.heartButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
+        cell.heartButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        cell.heartButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
         var row = tasks[indexPath.row]
         if searchBar.text?.isEmpty == true {
             row = tasks[indexPath.row]

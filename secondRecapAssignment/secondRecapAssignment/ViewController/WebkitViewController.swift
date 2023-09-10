@@ -32,7 +32,7 @@ class WebkitViewController: BaseViewController, WKUIDelegate {
         ])
     }
     func openURL(_ productID: String) {
-        var myURL = URL(string: "https://msearch.shopping.naver.com/product/\(productID)")
+        let myURL = URL(string: "https://msearch.shopping.naver.com/product/\(productID)")
         let myRequest = URLRequest(url: myURL!)
         webView.load(myRequest)
     }
