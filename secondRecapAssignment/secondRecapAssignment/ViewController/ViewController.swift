@@ -181,7 +181,7 @@ class ViewController: UIViewController {
     @objc func likeButtonTapped(_ sender: UIButton) {
         let shopping = list[sender.tag]
         
-        let task = ShoppingTable(productImage: shopping.image, mallName: shopping.mallName ?? "[네이버쇼핑]", productTitle: shopping.title, price: shopping.lprice)
+        let task = ShoppingTable(productId: shopping.productId, productImage: shopping.image, mallName: shopping.mallName ?? "[네이버쇼핑]", productTitle: shopping.title, price: shopping.lprice)
         print(task.like, "1")
         if sender.imageView?.image == UIImage(systemName: "heart") {
             ShopingListRepository.shared.createItem(task)

@@ -14,8 +14,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let config = Realm.Configuration(schemaVersion: 1) { migration, oldSchemaVersion in
+        let config = Realm.Configuration(schemaVersion: 2) { migration, oldSchemaVersion in
             if oldSchemaVersion < 1 { }
+            if oldSchemaVersion < 2 {
+                migration.enumerateObjects(ofType: ShoppingTable.className()) { oldObject, newObject
+                    in
+                    guard let new = newObject else { return }
+                    guard let old = oldObject else { return }
+                    new["productId"] = old["_id"]
+                    new["productId"] = old["_id"] ?? "1"
+                }
+               
+            }
         }
             
             Realm.Configuration.defaultConfiguration = config

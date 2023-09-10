@@ -10,7 +10,7 @@ import RealmSwift
 
 class ShoppingTable: Object {
     
-    @Persisted(primaryKey: true) var _id: ObjectId
+    @Persisted(primaryKey: true) var productId: String
     @Persisted var productImage: String
     @Persisted var mallName: String
     @Persisted var productTitle: String
@@ -18,9 +18,10 @@ class ShoppingTable: Object {
     @Persisted var like: Bool
     @Persisted var date: Date
     
-    convenience init(productImage: String, mallName: String, productTitle: String, price: String) {
+    convenience init(productId: String, productImage: String, mallName: String, productTitle: String, price: String) {
         self.init()
         
+        self.productId = productId
         self.productImage = productImage
         self.mallName = mallName
         self.productTitle = productTitle

@@ -11,7 +11,7 @@ import RealmSwift
 protocol ShopingListRepositoryType: AnyObject {
     func createItem(_ item: ShoppingTable)
     func removeItem(_ item: ShoppingTable)
-    func updateItem(id: ObjectId, image: String, name: String?, title: String, price: String)
+    func updateItem(productId: String, image: String, name: String?, title: String, price: String)
 }
 
 class ShopingListRepository: ShopingListRepositoryType {
@@ -29,7 +29,7 @@ class ShopingListRepository: ShopingListRepositoryType {
     }
     
     func createItem(_ item: ShoppingTable) {
-//        print(realm.configuration.fileURL)
+        print(realm.configuration.fileURL)
         do {
             try realm.write {
                 realm.add(item, update: .modified) //없다면 add하고 기본키가 같다면 update한다
@@ -42,7 +42,7 @@ class ShopingListRepository: ShopingListRepositoryType {
     func removeItem(_ item: ShoppingTable) {
 //        print(realm.configuration.fileURL)
         do {
-            guard let task = realm.objects(ShoppingTable.self).filter({ $0._id == item._id }).first else { return }
+            guard let task = realm.objects(ShoppingTable.self).filter({ $0.productId == item.productId }).first else { return }
             try realm.write {
                 realm.delete(task)
             }
@@ -51,11 +51,11 @@ class ShopingListRepository: ShopingListRepositoryType {
         }
     }
     
-    func updateItem(id: RealmSwift.ObjectId, image: String, name: String?, title: String, price: String) {
+    func updateItem(productId: String, image: String, name: String?, title: String, price: String) {
         do {
             try realm.write {
                 
-                realm.create(ShoppingTable.self, value: ["_id": id, "productImage": image, "mallName": name ?? "네이버 쇼핑" , "productTitle": title, "price": price], update: .modified)
+                realm.create(ShoppingTable.self, value: ["productId": productId, "productImage": image, "mallName": name ?? "네이버 쇼핑" , "productTitle": title, "price": price], update: .modified)
             }
         } catch {
             print("dddd")
