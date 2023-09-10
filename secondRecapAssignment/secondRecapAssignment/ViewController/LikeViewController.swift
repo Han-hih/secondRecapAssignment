@@ -50,8 +50,9 @@ class LikeViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let realm = try! Realm()
-        tasks = realm.objects(ShoppingTable.self)
+        tasks = realm.objects(ShoppingTable.self).sorted(byKeyPath: "date", ascending: false)
     }
+    
     override func configure() {
         super.configure()
         [searchBar, collectionView].forEach {
