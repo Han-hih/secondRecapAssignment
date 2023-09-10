@@ -126,6 +126,7 @@ extension LikeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShopingListViewControllerCell.identifier, for: indexPath) as? ShopingListViewControllerCell else { return UICollectionViewCell() }
         cell.heartButton.tag = indexPath.row
+        //어차피 좋아요 버튼 눌려진 것들이 넘어오니까 기본을 heart.fill로 구현
         cell.heartButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
         cell.heartButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
         var row = tasks[indexPath.row]
@@ -142,7 +143,10 @@ extension LikeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = WebkitViewController()
         vc.id = tasks[indexPath.row].productId
-        print(vc.id)
+        vc.heartButtonFilled = true
+        vc.title = tasks[indexPath.row].productTitle.replacingOccurrences(of: "</b>", with: "").replacingOccurrences(of: "<b>", with: "")
+//        print(vc.id)
+//        vc.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "heart.fill"), style: .plain, target: self, action: #selector(webLikeButtonTapped))
         navigationController?.pushViewController(vc, animated: true)
     }
 }
