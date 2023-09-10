@@ -263,10 +263,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
             }
         }
     }
-    
-    func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
-        print("___________________")
-    }
+
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return list.count
@@ -280,6 +277,13 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         cell.configure(row: row)
         
         return cell
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = WebkitViewController()
+        vc.id = list[indexPath.row].productId
+        print(vc.id)
+        navigationController?.pushViewController(vc, animated: true)
+        
     }
     
     

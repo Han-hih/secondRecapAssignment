@@ -29,6 +29,7 @@
 		8066DCB72AAC559A003EB4B6 /* ShopingListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8066DCB62AAC559A003EB4B6 /* ShopingListRepository.swift */; };
 		8066DCBB2AAD72FD003EB4B6 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8066DCBA2AAD72FD003EB4B6 /* Color.swift */; };
 		8066DCBD2AAD7448003EB4B6 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8066DCBC2AAD7448003EB4B6 /* BaseViewController.swift */; };
+		8066DCC72AADA18C003EB4B6 /* WebkitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8066DCC62AADA18C003EB4B6 /* WebkitViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		8066DCB62AAC559A003EB4B6 /* ShopingListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopingListRepository.swift; sourceTree = "<group>"; };
 		8066DCBA2AAD72FD003EB4B6 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		8066DCBC2AAD7448003EB4B6 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		8066DCC62AADA18C003EB4B6 /* WebkitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebkitViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +151,7 @@
 			children = (
 				8066DC932AA9F0C7003EB4B6 /* LikeViewController.swift */,
 				8066DC792AA9DFB9003EB4B6 /* ViewController.swift */,
+				8066DCC62AADA18C003EB4B6 /* WebkitViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -248,6 +251,7 @@
 				8066DCBD2AAD7448003EB4B6 /* BaseViewController.swift in Sources */,
 				8066DC782AA9DFB9003EB4B6 /* SceneDelegate.swift in Sources */,
 				8066DC942AA9F0C7003EB4B6 /* LikeViewController.swift in Sources */,
+				8066DCC72AADA18C003EB4B6 /* WebkitViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
