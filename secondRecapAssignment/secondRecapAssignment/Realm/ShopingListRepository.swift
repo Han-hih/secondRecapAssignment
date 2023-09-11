@@ -32,7 +32,7 @@ class ShopingListRepository: ShopingListRepositoryType {
         print(realm.configuration.fileURL)
         do {
             try realm.write {
-                realm.add(item, update: .modified) //없다면 add하고 기본키가 같다면 update한다
+                realm.add(item, update: .all) //없다면 add하고 기본키가 같다면 update한다
             }
         } catch {
             print(error)
@@ -45,6 +45,7 @@ class ShopingListRepository: ShopingListRepositoryType {
             guard let task = realm.objects(ShoppingTable.self).filter({ $0.productId == item.productId }).first else { return }
             try realm.write {
                 realm.delete(task)
+                print("제거됨")
             }
         } catch {
             print(error)

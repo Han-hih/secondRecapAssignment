@@ -117,6 +117,7 @@ extension LikeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let shopping = tasks[sender.tag]
         
         let task = ShoppingTable(productId: shopping.productId, productImage: shopping.productImage, mallName: shopping.mallName , productTitle: shopping.productTitle, price: shopping.productTitle)
+        // 하트이미지를 프로토콜로 전달..?
         if sender.imageView?.image == UIImage(systemName: "heart.fill") {
             ShopingListRepository.shared.removeItem(task)
             collectionView.reloadData()

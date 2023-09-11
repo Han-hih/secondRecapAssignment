@@ -15,25 +15,36 @@ class WebkitViewController: BaseViewController, WKUIDelegate {
     var id = ""
     var heartButtonFilled = true
     var tasks: Results<ShoppingTable>!
+    var table = [items]()
+    let realm = try! Realm()
     override func configure() {
         super.configure()
         view.addSubview(webView)
         webView.translatesAutoresizingMaskIntoConstraints = false
-        let realm = try! Realm()
+        
+        
         tasks = realm.objects(ShoppingTable.self)
         openURL(id)
         navigationSetting()
     }
     
     @objc func heartButtonTapped(_ sender: UIButton) {
+        let shopping = tasks[sender.tag]
+        let addShopping = table[sender.tag]
+        let task = ShoppingTable(productId: shopping.productId, productImage: shopping.productImage, mallName: shopping.mallName , productTitle: shopping.productTitle, price: shopping.productTitle)
+        let addTask = ShoppingTable(productId: addShopping.productId, productImage: addShopping.image, mallName: addShopping.mallName ?? "[네이버쇼핑]", productTitle: addShopping.title, price: addShopping.lprice)
         if navigationItem.rightBarButtonItem?.image == UIImage(systemName: "heart.fill") {
-            let shopping = tasks[sender.tag]
-            let task = ShoppingTable(productId: shopping.productId, productImage: shopping.productImage, mallName: shopping.mallName , productTitle: shopping.productTitle, price: shopping.productTitle)
-            
             navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart")
             ShopingListRepository.shared.removeItem(task)
-            }
+            //여기 까지는 잘됨
+        } else {
+            // 오류
+            print(addTask)
+            ShopingListRepository.shared.createItem(addTask)
+            navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
+
         }
+    }
     
     override func setConstraints() {
         super.setConstraints()
@@ -50,8 +61,16 @@ class WebkitViewController: BaseViewController, WKUIDelegate {
         webView.load(myRequest)
     }
     func navigationSetting() {
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "heart.fill"), style: .plain, target: self, action: #selector(heartButtonTapped))
-//        self.navigationController?.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: self, action: #selector(heartButtonTapped))
+        if realm.objects(ShoppingTable.self).contains(where: { ShoppingTable in
+            ShoppingTable.productId == id
+        }) {
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "heart.fill"), style: .plain, target: self, action: #selector(heartButtonTapped))
+        } else {
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: self, action: #selector(heartButtonTapped))
+        }
+//        self.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+
+
     }
 }
 

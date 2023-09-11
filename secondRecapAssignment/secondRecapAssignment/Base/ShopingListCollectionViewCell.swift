@@ -7,6 +7,7 @@
 
 import UIKit
 import RealmSwift
+
 class ShopingListViewControllerCell: BaseCollectionViewCell {
     static let shared = ShopingListViewControllerCell()
     
@@ -23,7 +24,7 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
         let view = UIImageView()
         view.layer.cornerRadius = 20
         view.clipsToBounds = true
-        view.backgroundColor = .systemPink
+        view.backgroundColor = LightColor.background
         return view
         
     }()
@@ -142,6 +143,10 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
             priceLabel.trailingAnchor.constraint(equalTo: mallNameLabel.trailingAnchor)
         
         ])
+    }
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        shoppingImageView.image = UIImage()
     }
     
 }

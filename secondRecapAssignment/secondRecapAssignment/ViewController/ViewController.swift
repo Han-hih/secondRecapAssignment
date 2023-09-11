@@ -8,6 +8,8 @@
 import UIKit
 import RealmSwift
 
+// MARK: - base로 바꾸기
+
 class ViewController: UIViewController {
     
     static let shared = ViewController()
@@ -103,24 +105,26 @@ class ViewController: UIViewController {
         setConstraints()
         shoppingListRepository.checkSchemaVersion()
     }
-    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
     //휴먼에러.......................
     // 어차피 마지막 누른 버튼값으로 sort가 들어가니까
     // 정렬을 두개(ex 정확도 + 오름차순)이상으로 하고 싶다면 배열사용..? 오름차순 + 내림차순 일 때 문제가 생겨서 다른 방식으로
     //검색을 한 상태에서도 다시 리로드 되도록 바꾸기
-        @objc func accuracySort() {
-            if accuracyButton.backgroundColor == .black {
-                sort = "sim"
-                // 버튼이 고정되어 있으니까 remove를 index 번호로 설정
-                buttonArray.remove(at: 0)
-                buttonArray.forEach {
-                    $0.setTitleColor(.black, for: .normal)
-                    $0.backgroundColor = .white
-                }
-                //다시 추가해준다.
-                buttonArray.insert(accuracyButton, at: 0)
+    @objc func accuracySort() {
+        if accuracyButton.backgroundColor == .black {
+            sort = "sim"
+            // 버튼이 고정되어 있으니까 remove를 index 번호로 설정
+            buttonArray.remove(at: 0)
+            buttonArray.forEach {
+                $0.setTitleColor(.black, for: .normal)
+                $0.backgroundColor = .white
             }
+            //다시 추가해준다.
+            buttonArray.insert(accuracyButton, at: 0)
         }
+    }
     @objc func dateSort() {
         if dateButton.backgroundColor == .black {
             sort = "date"
@@ -161,7 +165,7 @@ class ViewController: UIViewController {
         }
     }
     
-   
+    
     
     func callShopingRequest(_ query: String, _ sort: String, _ page: Int) {
         ShopingAPIManager.shared.listRequest(query: query, sort: sort, page: page) { value in
@@ -172,7 +176,6 @@ class ViewController: UIViewController {
                 let id = item.productId
                 let price = item.lprice
                 self.list.append(items(title: title, image: image, mallName: mallName ?? "네이버쇼핑", lprice: price ,productId: id))
-                
             }
             self.collectionView.reloadData()
         }
@@ -192,12 +195,11 @@ class ViewController: UIViewController {
             print(task.like)
         }
     }
-    
     func setNavigationBar() {
         self.navigationItem.title = "쇼핑 검색"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
     }
-    
+
     func setConstraints() {
         NSLayoutConstraint.activate([
             //searchBar
@@ -247,6 +249,7 @@ extension ViewController: UISearchBarDelegate {
         print(sort)
     }
 }
+
 // 데이터가 계속 있으면 상관없지만 51개, 40몇개 등등 있을 때 어떻게 페이지네이션을 처리해줄지...
 // 애초에 start가 100이 최대로 고정되어 있어서 따로 고려안해줘도 된다..?
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching {
@@ -254,13 +257,14 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         for indexPath in indexPaths {
             if list.count - 1 == indexPath.item && start < 1000  {
                 // display가 30개로 기본 세팅 되어있어서 30개씩 플러스 해줘야 다음 페이지로 넘어간다.
-                //뭔가 말로 설명이 잘 안된다,
+                // 하트버튼 누른것이 고정이 되어있다.
                 start += 30
                 print(list.count)
                 guard let query = searchBar.text else { return }
                 callShopingRequest(query, "sim", start)
                 
             }
+            
         }
     }
 
@@ -273,18 +277,22 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShopingListViewControllerCell.identifier, for: indexPath) as? ShopingListViewControllerCell else { return UICollectionViewCell() }
         cell.heartButton.tag = indexPath.row
         cell.heartButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
+//        cell.heartButton.addTarget(self, action: #selector(saveHeartButton), for: .touchUpInside)
         let row = list[indexPath.row]
         cell.configure(row: row)
         
         return cell
     }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = WebkitViewController()
         vc.id = list[indexPath.row].productId
         print(vc.id)
+        vc.table = self.list
         navigationController?.pushViewController(vc, animated: true)
         
     }
     
     
 }
+
