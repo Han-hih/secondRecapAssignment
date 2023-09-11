@@ -105,6 +105,10 @@ class ViewController: UIViewController {
         setConstraints()
         shoppingListRepository.checkSchemaVersion()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        collectionView.reloadData()
+    }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
     }
@@ -281,8 +285,9 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
             ShoppingTable.productId == list[indexPath.row].productId
         }) {
             cell.heartButton.imageView?.image = UIImage(systemName: "heart.fill")
+        } else {
+            cell.heartButton.imageView?.image = UIImage(systemName: "heart")
         }
-//        cell.heartButton.addTarget(self, action: #selector(saveHeartButton), for: .touchUpInside)
         let row = list[indexPath.row]
         cell.configure(row: row)
         
