@@ -89,7 +89,7 @@ class ViewController: UIViewController {
     var buttonArray: [UIButton] = []
     var shoppingList: Results<ShoppingTable>!
     let shoppingListRepository = ShopingListRepository.shared
-    
+    let realm = try! Realm()
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -277,6 +277,11 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShopingListViewControllerCell.identifier, for: indexPath) as? ShopingListViewControllerCell else { return UICollectionViewCell() }
         cell.heartButton.tag = indexPath.row
         cell.heartButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
+        if realm.objects(ShoppingTable.self).contains(where: { ShoppingTable in
+            ShoppingTable.productId == list[indexPath.row].productId
+        }) {
+            cell.heartButton.imageView?.image = UIImage(systemName: "heart.fill")
+        }
 //        cell.heartButton.addTarget(self, action: #selector(saveHeartButton), for: .touchUpInside)
         let row = list[indexPath.row]
         cell.configure(row: row)
