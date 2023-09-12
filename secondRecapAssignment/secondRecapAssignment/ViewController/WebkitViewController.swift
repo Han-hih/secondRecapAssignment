@@ -12,38 +12,37 @@ import RealmSwift
 class WebkitViewController: BaseViewController, WKUIDelegate {
     
     var webView = WKWebView()
-    var id = ""
     var heartButtonFilled = true
+    var id = ""
     var tasks: Results<ShoppingTable>!
     var table = [items]()
     let realm = try! Realm()
+    
     override func configure() {
         super.configure()
         view.addSubview(webView)
         webView.translatesAutoresizingMaskIntoConstraints = false
-        
-        
-        tasks = realm.objects(ShoppingTable.self)
+      
         openURL(id)
         navigationSetting()
     }
     
-    @objc func heartButtonTapped(_ sender: UIButton) {
-        let shopping = tasks[sender.tag]
-//        let addShopping = table[sender.tag]
-        let task = ShoppingTable(productId: shopping.productId, productImage: shopping.productImage, mallName: shopping.mallName , productTitle: shopping.productTitle, price: shopping.productTitle)
-//        let addTask = ShoppingTable(productId: addShopping.productId, productImage: addShopping.image, mallName: addShopping.mallName ?? "[네이버쇼핑]", productTitle: addShopping.title, price: addShopping.lprice)
-        if navigationItem.rightBarButtonItem?.image == UIImage(systemName: "heart.fill") {
+    
+    @objc func heartButtonTapped() {
+        let task = realm.objects(ShoppingTable.self)
+        let data = task.where {
+            $0.productId == id
+        }
+       let updateData = data[0]
+        if data[0] != nil {
+            ShopingListRepository.shared.removeItem(updateData)
             navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart")
-            ShopingListRepository.shared.removeItem(task)
-            //여기 까지는 잘됨
         } else {
-            // 오류
-//            print(addTask)
-//            ShopingListRepository.shared.createItem(addTask)
+            ShopingListRepository.shared.createItem(updateData)
             navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
 
         }
+      
     }
     
     override func setConstraints() {
@@ -64,6 +63,7 @@ class WebkitViewController: BaseViewController, WKUIDelegate {
         if realm.objects(ShoppingTable.self).contains(where: { ShoppingTable in
             ShoppingTable.productId == id
         }) {
+
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "heart.fill"), style: .plain, target: self, action: #selector(heartButtonTapped))
         } else {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: self, action: #selector(heartButtonTapped))

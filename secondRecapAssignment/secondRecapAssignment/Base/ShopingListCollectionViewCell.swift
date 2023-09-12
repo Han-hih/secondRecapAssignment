@@ -33,9 +33,9 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
         let button = UIButton()
         button.setImage(UIImage(systemName: "heart"), for: .normal)
         button.backgroundColor = .white
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.black.cgColor
-        button.layer.cornerRadius = button.layer.frame.size.height / 2
+//        button.layer.borderWidth = 1
+//        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.cornerRadius = button.bounds.size.width / 2
         button.clipsToBounds = true
         button.tintColor = .black
 //        button.addTarget(self, action: #selector(heartButtonToggle), for: .touchUpInside)
