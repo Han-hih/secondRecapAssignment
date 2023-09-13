@@ -120,7 +120,7 @@ class ViewController: UIViewController {
         let sort = "sim"
         list.removeAll()
         callShopingRequest(searchBar.text!, sort, 1)
-        if accuracyButton.backgroundColor == .black {
+        
             buttonArray.remove(at: 0)
             buttonArray.forEach {
                 $0.setTitleColor(.black, for: .normal)
@@ -128,16 +128,16 @@ class ViewController: UIViewController {
             }
             accuracyButton.backgroundColor = .black
             accuracyButton.setTitleColor(.white, for: .normal)
-            
-        }
+        
         buttonArray.insert(accuracyButton, at: 0)
+        print(buttonArray.count)
     }
     
     @objc func dateSort() {
         let sort = "date"
         list.removeAll()
         callShopingRequest(searchBar.text!, sort, 1)
-        if dateButton.backgroundColor == .black {
+        
             buttonArray.remove(at: 1)
             buttonArray.forEach {
                 $0.setTitleColor(.black, for: .normal)
@@ -146,14 +146,15 @@ class ViewController: UIViewController {
             dateButton.backgroundColor = .black
             dateButton.setTitleColor(.white, for: .normal)
             
-            }
         buttonArray.insert(dateButton, at: 1)
+        print(buttonArray.count)
         }
+    
     @objc func highPriceSort() {
         let sort = "dsc"
         list.removeAll()
         callShopingRequest(searchBar.text!, sort, 1)
-        if highPriceButton.backgroundColor == .black {
+        
             buttonArray.remove(at: 2)
             buttonArray.forEach {
                 $0.setTitleColor(.black, for: .normal)
@@ -162,14 +163,14 @@ class ViewController: UIViewController {
             highPriceButton.backgroundColor = .black
             highPriceButton.setTitleColor(.white, for: .normal)
             
-            }
         buttonArray.insert(highPriceButton, at: 2)
+        print(buttonArray.count)
         }
     @objc func lowPriceSort() {
         let sort = "asc"
         list.removeAll()
         callShopingRequest(self.searchBar.text!, sort, 1)
-        if lowPriceButton.backgroundColor == .black {
+        
             buttonArray.remove(at: 3)
             buttonArray.forEach {
                 $0.setTitleColor(.black, for: .normal)
@@ -177,9 +178,9 @@ class ViewController: UIViewController {
             }
             lowPriceButton.backgroundColor = .black
             lowPriceButton.setTitleColor(.white, for: .normal)
-            
-            }
+
         buttonArray.insert(lowPriceButton, at: 3)
+        print(buttonArray.count)
         }
     
     

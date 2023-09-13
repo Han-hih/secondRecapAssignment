@@ -32,7 +32,7 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
     lazy var heartButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "heart"), for: .normal)
-//        button.backgroundColor = .white
+        button.backgroundColor = .white
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.black.cgColor
         button.layer.cornerRadius = button.bounds.size.width / 2
