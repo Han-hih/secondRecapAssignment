@@ -198,7 +198,7 @@ class ViewController: UIViewController {
             self.collectionView.reloadData()
         }
     }
-    // MARK: - 수정필요
+    
     @objc func likeButtonTapped(_ sender: UIButton) {
         let shopping = list[sender.tag]
         
@@ -265,6 +265,11 @@ extension ViewController: UISearchBarDelegate {
         guard let query = searchBar.text else { return }
         callShopingRequest(query, sort, start)
         print(sort)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        searchBar.endEditing(true)
     }
 }
 
