@@ -312,6 +312,13 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         vc.id = list[indexPath.row].productId
         print(vc.id)
         vc.table = self.list
+        vc.image = list[indexPath.row].image
+        vc.mallName = list[indexPath.row].mallName ?? "[네이버쇼핑]"
+        vc.price = list[indexPath.row].lprice
+        
+        vc.title = list[indexPath.row].title.replacingOccurrences(of: "</b>", with: "").replacingOccurrences(of: "<b>", with: "")
+        
+        
         navigationController?.pushViewController(vc, animated: true)
         
     }
