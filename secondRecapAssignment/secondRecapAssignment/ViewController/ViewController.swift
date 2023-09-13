@@ -264,6 +264,7 @@ extension ViewController: UISearchBarDelegate {
         list.removeAll()
         guard let query = searchBar.text else { return }
         callShopingRequest(query, sort, start)
+        searchBar.endEditing(true)
         print(sort)
     }
     
