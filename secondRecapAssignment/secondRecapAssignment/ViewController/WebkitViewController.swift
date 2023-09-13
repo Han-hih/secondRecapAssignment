@@ -15,7 +15,7 @@ class WebkitViewController: BaseViewController, WKUIDelegate {
     var heartButtonFilled = true
     var id = ""
     var tasks: Results<ShoppingTable>!
-    var table = [items]()
+    
     let realm = try! Realm()
     
     override func configure() {
@@ -26,36 +26,37 @@ class WebkitViewController: BaseViewController, WKUIDelegate {
         openURL(id)
         navigationSetting()
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        let task = realm.objects(ShoppingTable.self)
-//        let data = task.where {
-//            $0.productId == id
-//        }
-//       let updateData = data[0]
-//        if data[0] != nil {
-//            navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart")
-//        } else {
-//            navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
-//
-//        }
+        let task = realm.objects(ShoppingTable.self)
+        let data = task.where {
+            $0.productId == id
+        }
+        if data.isEmpty {
+            navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart")
+        } else {
+            navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
+        }
     }
     
-    @objc func heartButtonTapped() {
+    @objc func filledHeartButtonTapped() {
         let task = realm.objects(ShoppingTable.self)
         let data = task.where {
             $0.productId == id
         }
        let updateData = data[0]
-        if data[0] != nil {
+        if data.isEmpty == false {
             ShopingListRepository.shared.removeItem(updateData)
             navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart")
-        } else {
-            ShopingListRepository.shared.createItem(updateData)
-            navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
-
+            //        } else {
+            ////            ShopingListRepository.shared.createItem()
+            //            navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
+            //        }
         }
-      
+    }
+    @objc func nonFilledHeartButtonTapped() {
+        navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
     }
     
     override func setConstraints() {
@@ -76,10 +77,9 @@ class WebkitViewController: BaseViewController, WKUIDelegate {
         if realm.objects(ShoppingTable.self).contains(where: { ShoppingTable in
             ShoppingTable.productId == id
         }) {
-
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "heart.fill"), style: .plain, target: self, action: #selector(heartButtonTapped))
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "heart.fill"), style: .plain, target: self, action: #selector(filledHeartButtonTapped))
         } else {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: self, action: #selector(heartButtonTapped))
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: self, action: #selector(nonFilledHeartButtonTapped))
         }
 //        self.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
 
