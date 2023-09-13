@@ -32,13 +32,13 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
     lazy var heartButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "heart"), for: .normal)
-        button.backgroundColor = .white
-//        button.layer.borderWidth = 1
-//        button.layer.borderColor = UIColor.black.cgColor
+//        button.backgroundColor = .white
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.black.cgColor
         button.layer.cornerRadius = button.bounds.size.width / 2
         button.clipsToBounds = true
         button.tintColor = .black
-//        button.addTarget(self, action: #selector(heartButtonToggle), for: .touchUpInside)
+        //        button.addTarget(self, action: #selector(heartButtonToggle), for: .touchUpInside)
         return button
     }()
     
@@ -68,8 +68,8 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
         label.numberOfLines = 1
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.4 // 줄어들 수 있는 비율
-//        label.text = numberFormatter.string(from: priceLabel.text) // 대략 100억 까지만 으로 가정
-
+        //        label.text = numberFormatter.string(from: priceLabel.text) // 대략 100억 까지만 으로 가정
+        
         return label
     }()
     var toggleButtonChecked = false
@@ -96,16 +96,16 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
         shoppingImageView.load(url: url)
     }
     // MARK: - 수정필요
-
-//    @objc func heartButtonToggle(_ sender: UIButton) {
-//        toggleButtonChecked.toggle()
-//
-//        if toggleButtonChecked == false {
-//            heartButton.setImage(UIImage(systemName: "heart"), for: .normal)
-//        } else {
-//            heartButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-//        }
-//    }
+    
+    //    @objc func heartButtonToggle(_ sender: UIButton) {
+    //        toggleButtonChecked.toggle()
+    //
+    //        if toggleButtonChecked == false {
+    //            heartButton.setImage(UIImage(systemName: "heart"), for: .normal)
+    //        } else {
+    //            heartButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+    //        }
+    //    }
     
     override func configure() {
         [shoppingImageView, heartButton, mallNameLabel, titleLabel, priceLabel].forEach {
@@ -115,7 +115,7 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
     }
     
     override func setConstraints() {
-//        contentView.layer.cornerRadius = 30 // 있을 필요가 없다...?
+        //        contentView.layer.cornerRadius = 30 // 있을 필요가 없다...?
         contentView.backgroundColor = .white
         
         NSLayoutConstraint.activate([
@@ -141,7 +141,7 @@ class ShopingListViewControllerCell: BaseCollectionViewCell {
             priceLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
             priceLabel.leadingAnchor.constraint(equalTo: mallNameLabel.leadingAnchor),
             priceLabel.trailingAnchor.constraint(equalTo: mallNameLabel.trailingAnchor)
-        
+            
         ])
     }
     override func prepareForReuse() {

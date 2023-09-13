@@ -26,7 +26,20 @@ class WebkitViewController: BaseViewController, WKUIDelegate {
         openURL(id)
         navigationSetting()
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+//        let task = realm.objects(ShoppingTable.self)
+//        let data = task.where {
+//            $0.productId == id
+//        }
+//       let updateData = data[0]
+//        if data[0] != nil {
+//            navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart")
+//        } else {
+//            navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
+//
+//        }
+    }
     
     @objc func heartButtonTapped() {
         let task = realm.objects(ShoppingTable.self)

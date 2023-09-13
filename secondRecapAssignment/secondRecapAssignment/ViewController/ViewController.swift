@@ -112,62 +112,75 @@ class ViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
     }
-    //휴먼에러.......................
+    
     // 어차피 마지막 누른 버튼값으로 sort가 들어가니까
     // 정렬을 두개(ex 정확도 + 오름차순)이상으로 하고 싶다면 배열사용..? 오름차순 + 내림차순 일 때 문제가 생겨서 다른 방식으로
     //검색을 한 상태에서도 다시 리로드 되도록 바꾸기
     @objc func accuracySort() {
+        let sort = "sim"
+        list.removeAll()
+        callShopingRequest(searchBar.text!, sort, 1)
         if accuracyButton.backgroundColor == .black {
-            sort = "sim"
-            // 버튼이 고정되어 있으니까 remove를 index 번호로 설정
             buttonArray.remove(at: 0)
             buttonArray.forEach {
                 $0.setTitleColor(.black, for: .normal)
                 $0.backgroundColor = .white
             }
-            //다시 추가해준다.
-            buttonArray.insert(accuracyButton, at: 0)
+            accuracyButton.backgroundColor = .black
+            accuracyButton.setTitleColor(.white, for: .normal)
+            
         }
+        buttonArray.insert(accuracyButton, at: 0)
     }
+    
     @objc func dateSort() {
+        let sort = "date"
+        list.removeAll()
+        callShopingRequest(searchBar.text!, sort, 1)
         if dateButton.backgroundColor == .black {
-            sort = "date"
             buttonArray.remove(at: 1)
             buttonArray.forEach {
                 $0.setTitleColor(.black, for: .normal)
                 $0.backgroundColor = .white
             }
-            buttonArray.insert(dateButton, at: 1)
-        } else {
-            sort = "sim"
+            dateButton.backgroundColor = .black
+            dateButton.setTitleColor(.white, for: .normal)
+            
+            }
+        buttonArray.insert(dateButton, at: 1)
         }
-    }
     @objc func highPriceSort() {
+        let sort = "dsc"
+        list.removeAll()
+        callShopingRequest(searchBar.text!, sort, 1)
         if highPriceButton.backgroundColor == .black {
-            sort = "dsc"
             buttonArray.remove(at: 2)
             buttonArray.forEach {
                 $0.setTitleColor(.black, for: .normal)
                 $0.backgroundColor = .white
             }
-            buttonArray.insert(highPriceButton, at: 2)
-        } else {
-            sort = "sim"
+            highPriceButton.backgroundColor = .black
+            highPriceButton.setTitleColor(.white, for: .normal)
+            
+            }
+        buttonArray.insert(highPriceButton, at: 2)
         }
-    }
     @objc func lowPriceSort() {
+        let sort = "asc"
+        list.removeAll()
+        callShopingRequest(self.searchBar.text!, sort, 1)
         if lowPriceButton.backgroundColor == .black {
-            sort = "asc"
             buttonArray.remove(at: 3)
             buttonArray.forEach {
                 $0.setTitleColor(.black, for: .normal)
                 $0.backgroundColor = .white
             }
-            buttonArray.insert(lowPriceButton, at: 3)
-        } else {
-            sort = "sim"
+            lowPriceButton.backgroundColor = .black
+            lowPriceButton.setTitleColor(.white, for: .normal)
+            
+            }
+        buttonArray.insert(lowPriceButton, at: 3)
         }
-    }
     
     
     
@@ -203,7 +216,7 @@ class ViewController: UIViewController {
         self.navigationItem.title = "쇼핑 검색"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
     }
-
+    
     func setConstraints() {
         NSLayoutConstraint.activate([
             //searchBar
@@ -265,13 +278,13 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
                 start += 30
                 print(list.count)
                 guard let query = searchBar.text else { return }
-                callShopingRequest(query, "sim", start)
+                callShopingRequest(query, sort, start)
                 
             }
             
         }
     }
-
+    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return list.count
