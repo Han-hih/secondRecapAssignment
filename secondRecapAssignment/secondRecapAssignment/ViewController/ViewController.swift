@@ -311,7 +311,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         let vc = WebkitViewController()
         vc.id = list[indexPath.row].productId
         print(vc.id)
-        vc.table = self.list
+        vc.productTitle = self.list[indexPath.row].title
         vc.image = list[indexPath.row].image
         vc.mallName = list[indexPath.row].mallName ?? "[네이버쇼핑]"
         vc.price = list[indexPath.row].lprice
