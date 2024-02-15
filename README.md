@@ -26,9 +26,7 @@
 
 ### 2. prepareForReuse를 이용한 셀 초기화
 - 스크롤을 하면 새로운 데이터를 불러올 때마다 기존 셀에 데이터가 남아있는 현상이 생김
-- 셀 재사용시 이미지와 좋아요 버튼에 관한 동작에 초기화를 해줘서 로딩에 관련된 문제를 해결 ^
-- 애플 공식문서에서는 성능 이슈로 content초기화는 안 좋아서 content와 관련이 없는 것들만 해주는 것이 좋다고 한다.(ex: isHidden = false, isSelected = false)
-  
+- 셀 재사용시 이미지와 좋아요 버튼에 관한 동작에 초기화를 해줘서 로딩에 관련된 문제를 해결 
 ```swift
  override func prepareForReuse() {
      super.prepareForReuse()
