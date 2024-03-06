@@ -24,25 +24,38 @@ class LikeViewController: BaseViewController {
         return view
     }()
     
-    private lazy var collectionView:  UICollectionView = {
-        let spacing: CGFloat = 10
-        let width = (UIScreen.main.bounds.size.width - (spacing * 3)) / 2
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.itemSize = CGSize(width: width, height: width * 1.5)
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .white
-        collectionView.register(ShopingListViewControllerCell.self, forCellWithReuseIdentifier: ShopingListViewControllerCell.identifier)
-        collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 10)
-        
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.keyboardDismissMode = .onDrag
-        
-        
-        return collectionView
+    //    private lazy var collectionView:  UICollectionView = {
+//        let spacing: CGFloat = 10
+//        let width = (UIScreen.main.bounds.size.width - (spacing * 3)) / 2
+//        let layout = UICollectionViewFlowLayout()
+//        layout.scrollDirection = .vertical
+//        layout.itemSize = CGSize(width: width, height: width * 1.5)
+//        
+//        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+//        collectionView.backgroundColor = .white
+//        collectionView.register(ShopingListViewControllerCell.self, forCellWithReuseIdentifier: ShopingListViewControllerCell.identifier)
+//        collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 10)
+//        
+//        collectionView.delegate = self
+//        collectionView.dataSource = self
+//        collectionView.keyboardDismissMode = .onDrag
+//        
+//        
+//        return collectionView
+//    }()
+    
+    private lazy var tableView = {
+        let view = UITableView()
+        view.register(LikeTableViewCell.self, forCellReuseIdentifier: LikeTableViewCell.identifier)
+        view.backgroundColor = .white
+        view.delegate = self
+        view.dataSource = self
+        view.allowsSelection = true
+        view.keyboardDismissMode = .onDrag
+        view.rowHeight = 120
+        return view
     }()
+
     
     var tasks: Results<ShoppingTable>!
     var taskList: [ShoppingTable] = []
@@ -51,7 +64,7 @@ class LikeViewController: BaseViewController {
         super.viewWillAppear(animated)
         let realm = try! Realm()
         tasks = realm.objects(ShoppingTable.self).sorted(byKeyPath: "date", ascending: false)
-        collectionView.reloadData()
+        tableView.reloadData()
         
     }
     
@@ -100,13 +113,13 @@ extension LikeViewController: UISearchBarDelegate {
                 taskList.append(item)
             }
         }
-        collectionView.reloadData()
+        tableView.reloadData()
         
         }
 }
 
-extension LikeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+extension LikeViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if searchBar.text?.isEmpty == true {
             return tasks.count
         } else {
@@ -117,37 +130,86 @@ extension LikeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let shopping = tasks[sender.tag]
         
         let task = ShoppingTable(productId: shopping.productId, productImage: shopping.productImage, mallName: shopping.mallName , productTitle: shopping.productTitle, price: shopping.productTitle)
-        // 하트이미지를 프로토콜로 전달..?
+        
         if sender.imageView?.image == UIImage(systemName: "heart.fill") {
             ShopingListRepository.shared.removeItem(task)
-            collectionView.reloadData()
+            tableView.reloadData()
         }
     }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShopingListViewControllerCell.identifier, for: indexPath) as? ShopingListViewControllerCell else { return UICollectionViewCell() }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: LikeTableViewCell.identifier, for: indexPath) as? LikeTableViewCell else { return UITableViewCell() }
         cell.heartButton.tag = indexPath.row
-        //어차피 좋아요 버튼 눌려진 것들이 넘어오니까 기본을 heart.fill로 구현
-        cell.heartButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-        cell.heartButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
-        var row = tasks[indexPath.row]
-        if searchBar.text?.isEmpty == true {
-            row = tasks[indexPath.row]
-        } else {
-            row = taskList[indexPath.row]
-        }
+                //어차피 좋아요 버튼 눌려진 것들이 넘어오니까 기본을 heart.fill로 구현
+                cell.heartButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+                cell.heartButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
+                var row = tasks[indexPath.row]
+                if searchBar.text?.isEmpty == true {
+                    row = tasks[indexPath.row]
+                } else {
+                    row = taskList[indexPath.row]
+                }
         
-        cell.likeConfigure(row: row)
+                cell.likeConfigure(row: row)
         
-        return cell
+                return cell
     }
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = WebkitViewController()
-        vc.id = tasks[indexPath.row].productId
-        vc.heartButtonFilled = true
-        vc.title = tasks[indexPath.row].productTitle.replacingOccurrences(of: "</b>", with: "").replacingOccurrences(of: "<b>", with: "")
-//        print(vc.id)
-//        vc.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "heart.fill"), style: .plain, target: self, action: #selector(webLikeButtonTapped))
-        navigationController?.pushViewController(vc, animated: true)
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            print("눌림")
+                let vc = WebkitViewController()
+                vc.id = tasks[indexPath.row].productId
+                vc.heartButtonFilled = true
+                vc.title = tasks[indexPath.row].productTitle.replacingOccurrences(of: "</b>", with: "").replacingOccurrences(of: "<b>", with: "")
+                navigationController?.pushViewController(vc, animated: true)
     }
+    
+    
 }
+
+//extension LikeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        if searchBar.text?.isEmpty == true {
+//            return tasks.count
+//        } else {
+//            return taskList.count
+//        }
+//    }
+//    @objc func likeButtonTapped(_ sender: UIButton) {
+//        let shopping = tasks[sender.tag]
+//
+//        let task = ShoppingTable(productId: shopping.productId, productImage: shopping.productImage, mallName: shopping.mallName , productTitle: shopping.productTitle, price: shopping.productTitle)
+//        // 하트이미지를 프로토콜로 전달..?
+//        if sender.imageView?.image == UIImage(systemName: "heart.fill") {
+//            ShopingListRepository.shared.removeItem(task)
+//            collectionView.reloadData()
+//        }
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShopingListViewControllerCell.identifier, for: indexPath) as? ShopingListViewControllerCell else { return UICollectionViewCell() }
+//        cell.heartButton.tag = indexPath.row
+//        //어차피 좋아요 버튼 눌려진 것들이 넘어오니까 기본을 heart.fill로 구현
+//        cell.heartButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+//        cell.heartButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
+//        var row = tasks[indexPath.row]
+//        if searchBar.text?.isEmpty == true {
+//            row = tasks[indexPath.row]
+//        } else {
+//            row = taskList[indexPath.row]
+//        }
+//
+//        cell.likeConfigure(row: row)
+//
+//        return cell
+//    }
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        let vc = WebkitViewController()
+//        vc.id = tasks[indexPath.row].productId
+//        vc.heartButtonFilled = true
+//        vc.title = tasks[indexPath.row].productTitle.replacingOccurrences(of: "</b>", with: "").replacingOccurrences(of: "<b>", with: "")
+////        print(vc.id)
+////        vc.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "heart.fill"), style: .plain, target: self, action: #selector(webLikeButtonTapped))
+//        navigationController?.pushViewController(vc, animated: true)
+//    }
+//}
